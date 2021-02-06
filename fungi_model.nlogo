@@ -16,9 +16,11 @@
     ;f6s-own [cur-growth6]
     ;f7s-own [cur-growth7]
 
-    patches-own [matter-decomp decomp-color]
-
-    globals [cur_temp cur_moist
+    patches-own [matter-decomp new-decomp decomp-color wait-time time-waited]
+    
+    turtles-own [rank]
+     
+    globals [cur-temp cur-moist
     f1color f2color f3color f4color f5color f6color f7color
 
     decomp-rate1  cur-growth1 cur-growth-rate1 new-growth1 amount-decomp1 temp-at-maxr1 moist-at-maxr1 rank1
@@ -35,7 +37,11 @@
     clear-all
     ask patches [
         ; patches are ground litter or not
-        ifelse random 100 < ground-litter-percent [set pcolor brown set matter-decomp 80] [set pcolor green set matter-decomp 20]
+        ifelse random 100 < ground-litter-percent [set pcolor brown set matter-decomp 0.80 set new-decomp 0 set decomp-color brown] 
+        [set pcolor green set matter-decomp 0.20 set new-decomp 0 set decomp-color green set wait-time 0 ]
+        
+        set wait-time 0 
+        set time-waited 0
     ]
 
     set-default-shape turtles "fungi"
@@ -51,6 +57,8 @@
     end
 
     to go
+    calculate-growth-rate
+  
     grow-fungi
     fight-fungi
     death-fungi
@@ -64,8 +72,8 @@
     end
 
     to initialize-vars
-    set cur_temp 30
-    set cur_moist -0.5
+    set cur-temp 22
+    set cur-moist -0.5
 
     set cur-growth1 0
     set cur-growth2 0
@@ -74,14 +82,15 @@
     set cur-growth5 0
     set cur-growth6 0
     set cur-growth7 0
-
-    set cur-growth-rate1 1
-    set cur-growth-rate2 5
-    set cur-growth-rate3 10
-    set cur-growth-rate4 15
-    set cur-growth-rate5 20
-    set cur-growth-rate6 25
-    set cur-growth-rate7 30
+    
+    calculate-growth-rate
+    ;set cur-growth-rate1 1
+    ;set cur-growth-rate2 5
+    ;set cur-growth-rate3 10
+    ;set cur-growth-rate4 15
+    ;set cur-growth-rate5 20
+    ;set cur-growth-rate6 25
+    ;set cur-growth-rate7 30
 
     set new-growth1 0
     set new-growth2 0
@@ -91,13 +100,13 @@
     set new-growth6 0
     set new-growth7 0
   
-    set decomp-rate1 4.74
-    set decomp-rate2 .878
-    set decomp-rate3 2
-    set decomp-rate4 1.72
-    set decomp-rate5 9.87
-    set decomp-rate6 1.80
-    set decomp-rate7 4.63
+    set decomp-rate1 0.0474
+    set decomp-rate2 0.00878
+    set decomp-rate3 0.02
+    set decomp-rate4 0.0172
+    set decomp-rate5 0.987
+    set decomp-rate6 0.0180
+    set decomp-rate7 0.0463
 
     set temp-at-maxr1 28.54
     set temp-at-maxr2 26.94
@@ -135,61 +144,62 @@
 
     to sprout-fungi
     ask n-of initial-fungi-per-cluster patches with [pcolor = brown and not any? other turtles-here]
-    [sprout-f1s 1 [set color red]]
+    [sprout-f1s 1 [set color red set rank rank1]]
 
     ask n-of initial-fungi-per-cluster patches with [pcolor = brown and not any? other turtles-here]
-    [sprout-f2s 1 [set color orange]]
+    [sprout-f2s 1 [set color orange set rank rank2]]
 
     ask n-of initial-fungi-per-cluster patches with [pcolor = brown and not any? other turtles-here]
-    [sprout-f3s 1 [set color yellow]]
+    [sprout-f3s 1 [set color yellow set rank rank3]]
 
     ask n-of initial-fungi-per-cluster patches with [pcolor = brown and not any? other turtles-here]
-    [sprout-f4s 1 [set color cyan]]
+    [sprout-f4s 1 [set color cyan set rank rank4]]
 
     ask n-of initial-fungi-per-cluster patches with [pcolor = brown and not any? other turtles-here]
-    [sprout-f5s 1 [set color blue]]
+    [sprout-f5s 1 [set color blue set rank rank5]]
 
     ask n-of initial-fungi-per-cluster patches with [pcolor = brown and not any? other turtles-here]
-    [sprout-f6s 1 [set color violet]]
+    [sprout-f6s 1 [set color violet set rank rank6]]
 
     ask n-of initial-fungi-per-cluster patches with [pcolor = brown and not any? other turtles-here]
-    [sprout-f7s 1 [set color magenta]]
+    [sprout-f7s 1 [set color magenta set rank rank7]]
 
     end
 
     to calculate-growth-rate
       ifelse cur-temp <= temp-at-maxr1
-        [set cur-growth-rate1 3*(.451*cur-temp-.93)]
-        [set cur-growth-rate1 3*(-1.44*cur-temp+52.85)]
+        [set cur-growth-rate1 3 *(.451 * cur-temp - .93)]
+        [set cur-growth-rate1 3 *(-1.44 * cur-temp + 52.85)]
 
       ifelse cur-moist <= moist-at-maxr1
-        [set cur-growth-rate1 cur-growth-rate1*(-.796*cur-moist+.66)]
-        [set cur-growth-rate1 cur-growth-rate1*(.228*cur-moist+1.1)]
+        [set cur-growth-rate1 cur-growth-rate1 *(-.796 * cur-moist + .66)]
+        [set cur-growth-rate1 cur-growth-rate1 *(.228 * cur-moist + 1.1)]
 
       ifelse cur-temp <= temp-at-maxr2
-        [set cur-growth-rate2 3*(.0616*cur-temp-.34)*(-.637*cur-moist+.66)]
-        [set cur-growth-rate2 3*(-.152*cur-temp+5.42)*(.169*cur-moist+1.09)]
+        [set cur-growth-rate2 3 *(.0616 * cur-temp - .34)*(-.637 * cur-moist + .66)]
+        [set cur-growth-rate2 3 *(-.152 * cur-temp + 5.42)*(.169 * cur-moist + 1.09)]
 
       ifelse cur-temp <= temp-at-maxr3
-        [set cur-growth-rate3 3*(0.436*cur-temp-3.46)*(-.524*cur-moist+.68)]
-        [set cur-growth-rate3 3*(-1.30*cur-temp+56.01)*(.172*cur-moist+1.1)]
+        [set cur-growth-rate3 3 *(0.436 * cur-temp - 3.46)*(-.524 * cur-moist + .68)]
+        [set cur-growth-rate3 3 *(-1.30 * cur-temp + 56.01)*(.172 * cur-moist + 1.1)]
 
       ifelse cur-temp <= temp-at-maxr4
-        [set cur-growth-rate4 3*(0.326*cur-temp-2.69)*(-.620*cur-moist+.67)]
-        [set cur-growth-rate4 3*(-1.26*cur-temp+41.54)*(.231*cur-moist+1.12)]
+        [set cur-growth-rate4 3 * (0.326 * cur-temp - 2.69)*(-.620 * cur-moist + .67)]
+        [set cur-growth-rate4 3 * (-1.26 * cur-temp + 41.54)*(.231 * cur-moist + 1.12)]
 
       ifelse cur-temp <= temp-at-maxr5
-        [set cur-growth-rate5 3*(0.438*cur-temp-1.11)*(-1.32*cur-moist+.66)]
-        [set cur-growth-rate5 3*(-1.60*cur-temp+60.81)*(.318*cur-moist+1.08)]
-
+        [set cur-growth-rate5 3 * (0.438 * cur-temp - 1.11)*(-1.32 * cur-moist + .66)]
+        [set cur-growth-rate5 3 * (-1.60 * cur-temp + 60.81)*(.318 * cur-moist + 1.08)]
+ 
       ifelse cur-temp <= temp-at-maxr6
-        [set cur-growth-rate6 3*(.0224*cur-temp+0.24)*(-.443*cur-moist+.66)]
-        [set cur-growth-rate6 3*(-.0568*cur-temp+2.12)*(.12*cur-moist+1.09)]
-
+        [set cur-growth-rate6 3 * (.0224 * cur-temp + 0.24)*(-.443 * cur-moist + .66)]
+        [set cur-growth-rate6 3 *(-.0568 * cur-temp + 2.12)*(.12 * cur-moist + 1.09)]
+ 
       ifelse cur-temp <= temp-at-maxr7
-        [set cur-growth-rate7 3*(.312*cur-temp-2.3)*(-.97*cur-moist+.66)]
-        [set cur-growth-rate7 3*(-1.11*cur-temp+40.33)*(.281*cur-moist+1.1)]
-
+        [set cur-growth-rate7 3 *(.312 * cur-temp - 2.3)*(-.97 * cur-moist + .66)]
+        [set cur-growth-rate7 3 *(-1.11 * cur-temp + 40.33)*(.281 * cur-moist + 1.1)]
+    end 
+    
     to grow-fungi
     set cur-growth1  cur-growth-rate1 + cur-growth1
     set cur-growth2  cur-growth-rate2 + cur-growth2
@@ -294,11 +304,26 @@
     end
 
     to fight-fungi
-        ask patches with [any? f1s-here] [
-            ask neighbors with [any? other turtles-here] [
-                
-            ]
+        ask patches with [any? other turtles-here] [;[any? f1s-here] [
+            let fight1 one-of turtles-here
+            let fight1-rank rank of fight1
+            ask neighbors with [any? other turtles-here with [ breed != [ breed ] of fight1]] [
+                let fight2 one-of turtles-here
+                let fight2-rank rank
+                let rank-diff fight1-rank - fight2-rank
+                ;if neg do nothing- so each set of turtles fight once
+                if rank-diff > 0.7 and rank-diff <= 1 [set wait-time 1]
+                if rank-diff > 0.4 and rank-diff <= 0.7 [set wait-time 2]
+                if rank-diff > 0.1 and rank-diff <= 0.4[set wait-time 3]
+                ;0.1 < rank-diff <= 0.1 [set wait-time 2] do nothing, standstill
+            ] 
+    
 
+        ]
+        set time-waited time-waited + 1
+        ask patches [ 
+        if time-waited >= wait-time 
+        []
         ]
 
     end
