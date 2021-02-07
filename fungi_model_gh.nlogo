@@ -55,13 +55,39 @@
 
     sprout-fungi
 
-
-
-
     reset-ticks
+
+    (ifelse
+    climate = "arid"
+    [arid-climate]
+    climate = "semi-arid"
+    [semi-arid-climate]
+    climate = "temperate"
+    [temperate-climate]
+    climate = "boreal"
+    [boreal-climate]
+    climate = "tropical-rainforest"
+    [tropical-rainforest-climate])
+
+
+
     end
 
     to go
+
+    (ifelse
+    climate = "arid"
+    [arid-climate]
+    climate = "semi-arid"
+    [semi-arid-climate]
+    climate = "temperate"
+    [temperate-climate]
+    climate = "boreal"
+    [boreal-climate]
+    climate = "tropical-rainforest"
+    [tropical-rainforest-climate])
+
+
     calculate-growth-rate
 
     grow-fungi
@@ -72,13 +98,14 @@
 
 
 
+
     tick
     ;my-update-plots
     end
 
     to initialize-vars
-    set cur-temp 16
-    set cur-moist -3
+    ;set cur-temp 30
+    ;set cur-moist -4
 
     set cur-growth1 0
     set cur-growth2 0
@@ -103,7 +130,7 @@
     set new-growth4 0
     set new-growth5 0
     set new-growth6 0
-  set new-growth7 0
+    set new-growth7 0
 
     set decomp-rate1 0.417 / 100
     set decomp-rate2 1.1079 / 100
@@ -469,6 +496,12 @@ to grow-f7s
     end
 
     to add-litter ;Add extra litter year round add extra litter during fall
+     (ifelse
+     climate = "arid"
+     [];arid-climate]
+     climate = "temperate"
+     []);temperate-climate])
+
      ask patches [
       if random 100 < 0.05 * ground-litter-percent [
       set matter-decomp matter-decomp + random-float 0.05 ;+ 0.1
@@ -497,13 +530,13 @@ to grow-f7s
     end
 
     to death-fungi ;die if growth rate < 25% of max
-      ask f1s [if cur-growth-rate1 < 0.2 * max-rate1 [die]]
-        ask f2s [if cur-growth-rate2 < 0.2 * max-rate2 [die]]
-        ask f3s [if cur-growth-rate3 < 0.2 * max-rate3 [die]]
-        ask f4s [if cur-growth-rate4 < 0.2 * max-rate4 [die]]
-        ask f5s [if cur-growth-rate5 < 0.2 * max-rate5 [die]]
-        ask f6s [if cur-growth-rate6 < 0.2 * max-rate6 [die]]
-        ask f7s [if cur-growth-rate7 < 0.2 * max-rate7 [die]]
+        ask f1s [if cur-growth-rate1 < 0.005 * max-rate1 [die]]
+        ask f2s [if cur-growth-rate2 < 0.005 * max-rate2 [die]]
+        ask f3s [if cur-growth-rate3 < 0.005 * max-rate3 [die]]
+        ask f4s [if cur-growth-rate4 < 0.005 * max-rate4 [die]]
+        ask f5s [if cur-growth-rate5 < 0.005 * max-rate5 [die]]
+        ask f6s [if cur-growth-rate6 < 0.005 * max-rate6 [die]]
+        ask f7s [if cur-growth-rate7 < 0.005 * max-rate7 [die]]
     end
 
 
@@ -584,6 +617,527 @@ to grow-f7s
   ;plot sum [ grass-amount ] of patches / 50 ;; scaling factor so plot looks nice
 
 ;end
+
+
+to arid-climate ;arid sabha, ly
+  ;set cur-temp 25
+  set cur-moist -3
+  let week ticks mod 48
+
+  if week >= 0 and week < 4 [ ;jan
+    let min-temp 9
+    let max-temp 18
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 4 and week < 8 [ ;feb
+    let min-temp 11
+    let max-temp 21
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 8 and week < 12 [ ;march
+    let min-temp 15
+    let max-temp 26
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 12 and week < 16 [ ;april
+    let min-temp 21
+    let max-temp 32
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 16 and week < 20 [ ;may
+    let min-temp 25
+    let max-temp 35
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 20 and week < 24 [ ;june
+    let min-temp 28
+    let max-temp 38
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 24 and week < 28 [ ;july
+    let min-temp 28
+    let max-temp 38
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 28 and week < 32 [ ;august
+    let min-temp 28
+    let max-temp 38
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 32 and week < 36 [ ;sept
+    let min-temp 26
+    let max-temp 36
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 36 and week < 40 [ ;oct
+    let min-temp 22
+    let max-temp 31
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 40 and week < 44 [ ;nov
+    let min-temp 16
+    let max-temp 24
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 44 and week < 48 [ ;nov
+    let min-temp 10
+    let max-temp 19
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+end
+
+
+to semi-arid-climate ;Reno, Nevada
+  ;set cur-temp 25
+  set cur-moist -1
+  let week ticks mod 48
+
+  if week >= 0 and week < 4 [ ;jan
+    let min-temp -4
+    let max-temp 4
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 4 and week < 8 [ ;feb
+    let min-temp -3
+    let max-temp 5
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 8 and week < 12 [ ;march
+    let min-temp -1
+    let max-temp 8
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 12 and week < 16 [ ;april
+    let min-temp 2
+    let max-temp 13
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 16 and week < 20 [ ;may
+    let min-temp 5
+    let max-temp 18
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 20 and week < 24 [ ;june
+    let min-temp 10
+    let max-temp 24
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 24 and week < 28 [ ;july
+    let min-temp 14
+    let max-temp 29
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 28 and week < 32 [ ;august
+    let min-temp 13
+    let max-temp 28
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 32 and week < 36 [ ;sept
+    let min-temp 10
+    let max-temp 24
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 36 and week < 40 [ ;oct
+    let min-temp 4
+    let max-temp 16
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 40 and week < 44 [ ;nov
+    let min-temp -1
+    let max-temp 9
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 44 and week < 48 [ ;nov
+    let min-temp -5
+    let max-temp 3
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+end
+
+
+
+to temperate-climate ;houston
+  ;set cur-temp 25
+  set cur-moist -0.5
+  let week ticks mod 48
+
+  if week >= 0 and week < 4 [ ;jan
+    let min-temp (43.2 - 32) * 5 / 9
+    let avg-temp (53.1 - 32) * 5 / 9
+    let max-temp (62.9 - 32) * 5 / 9
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 4 and week < 8 [ ;feb
+    let min-temp (46.5 - 32) * 5 / 9
+    let avg-temp (56.4 - 32) * 5 / 9
+    let max-temp (66.3 - 32) * 5 / 9
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 8 and week < 12 [ ;march
+    let min-temp (52.5 - 32) * 5 / 9
+    let avg-temp (62.7 - 32) * 5 / 9
+    let max-temp (73.0 - 32) * 5 / 9
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 12 and week < 16 [ ;april
+    let min-temp (59.4 - 32) * 5 / 9
+    let avg-temp (69.5 - 32) * 5 / 9
+    let max-temp (79.6 - 32) * 5 / 9
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 16 and week < 20 [ ;may
+    let min-temp (67.6 - 32) * 5 / 9
+    let avg-temp (76.9 - 32) * 5 / 9
+    let max-temp (86.3 - 32) * 5 / 9
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 20 and week < 24 [ ;june
+    let min-temp (73.3 - 32) * 5 / 9
+    let avg-temp (82.4 - 32) * 5 / 9
+    let max-temp (91.4 - 32) * 5 / 9
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 24 and week < 28 [ ;july
+    let min-temp (75.1 - 32) * 5 / 9
+    let avg-temp (84.4 - 32) * 5 / 9
+    let max-temp (93.7 - 32) * 5 / 9
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 28 and week < 32 [ ;august
+    let min-temp (74.8 - 32) * 5 / 9
+    let avg-temp (84.6 - 32) * 5 / 9
+    let max-temp (95.4 - 32) * 5 / 9
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 32 and week < 36 [ ;sept
+    let min-temp (69.8 - 32) * 5 / 9
+    let avg-temp (79.8 - 32) * 5 / 9
+    let max-temp (89.7 - 32) * 5 / 9
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 36 and week < 40 [ ;oct
+    let min-temp (60.9 - 32) * 5 / 9
+    let avg-temp (71.5 - 32) * 5 / 9
+    let max-temp (82.0 - 32) * 5 / 9
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 40 and week < 44 [ ;nov
+    let min-temp (52.1 - 32) * 5 / 9
+    let avg-temp (62.3 - 32) * 5 / 9
+    let max-temp (72.5 - 32) * 5 / 9
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 44 and week < 48 [ ;nov
+    let min-temp (44.6 - 32) * 5 / 9
+    let avg-temp (54.4 - 32) * 5 / 9
+    let max-temp (64.3 - 32) * 5 / 9
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+end
+
+to boreal-climate ;anchorage, alasksa
+  ;set cur-temp 25
+  set cur-moist -0.5
+  let week ticks mod 48
+
+  if week >= 0 and week < 4 [ ;jan
+    let min-temp -11
+    let max-temp -7
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 4 and week < 8 [ ;feb
+    let min-temp -10
+    let max-temp -4
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 8 and week < 12 [ ;march
+    let min-temp -8
+    let max-temp -2
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 12 and week < 16 [ ;april
+    let min-temp -1
+    let max-temp 4
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 16 and week < 20 [ ;may
+    let min-temp 5
+    let max-temp 11
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 20 and week < 24 [ ;june
+    let min-temp 9
+    let max-temp 15
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 24 and week < 28 [ ;july
+    let min-temp 11
+    let max-temp 16
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 28 and week < 32 [ ;august
+    let min-temp 10
+    let max-temp 15
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 32 and week < 36 [ ;sept
+    let min-temp 7
+    let max-temp 11
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 36 and week < 40 [ ;oct
+    let min-temp 2
+    let max-temp 5
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 40 and week < 44 [ ;nov
+    let min-temp -6
+    let max-temp -3
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 44 and week < 48 [ ;nov
+    let min-temp -9
+    let max-temp -5
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+end
+
+to tropical-rainforest-climate ;Pontianak, Indonesia
+  ;set cur-temp 25
+  set cur-moist -0.1
+  let week ticks mod 48
+
+  if week >= 0 and week < 4 [ ;jan
+    let min-temp 24
+    let max-temp 30
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 4 and week < 8 [ ;feb
+    let min-temp 23
+    let max-temp 31
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 8 and week < 12 [ ;march
+    let min-temp 24
+    let max-temp 31
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 12 and week < 16 [ ;april
+    let min-temp 24
+    let max-temp 32
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 16 and week < 20 [ ;may
+    let min-temp 24
+    let max-temp 32
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 20 and week < 24 [ ;june
+    let min-temp 24
+    let max-temp 32
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 24 and week < 28 [ ;july
+    let min-temp 24
+    let max-temp 32
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 28 and week < 32 [ ;august
+    let min-temp 24
+    let max-temp 32
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 32 and week < 36 [ ;sept
+    let min-temp 24
+    let max-temp 32
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 36 and week < 40 [ ;oct
+    let min-temp 24
+    let max-temp 31
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 40 and week < 44 [ ;nov
+    let min-temp 24
+    let max-temp 31
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+  if week >= 44 and week < 48 [ ;nov
+    let min-temp 24
+    let max-temp 30
+    let avg-temp (max-temp + min-temp) / 2
+    let std (max-temp - min-temp) / 3
+    set cur-temp random-normal avg-temp std
+  ]
+
+end
+
+
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -613,9 +1167,9 @@ ticks
 30.0
 
 BUTTON
-36
+23
 10
-99
+86
 43
 setup
 setup
@@ -662,10 +1216,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-24
-88
-198
-121
+23
+93
+197
+126
 initial-fungi-per-cluster
 initial-fungi-per-cluster
 0
@@ -677,10 +1231,10 @@ NIL
 HORIZONTAL
 
 PLOT
-21
-221
-221
-371
+1257
+209
+1457
+359
 Population of Fungi Clusters over Time
 Time
 Population
@@ -701,10 +1255,10 @@ PENS
 "f7s" 1.0 0 -5825686 true "" "plot count f7s"
 
 PLOT
-21
-412
-221
-562
+1257
+392
+1457
+542
 Decomposition by Fungi Clusters over Time
 Time
 Decomposition (patches)
@@ -741,6 +1295,74 @@ false
 "" ""
 PENS
 "dp" 1.0 0 -6459832 true "" "plot count patches with [decomp? = true]"
+
+CHOOSER
+24
+140
+172
+185
+climate
+climate
+"arid" "semi-arid" "temperate" "boreal" "tropical-rainforest"
+2
+
+MONITOR
+25
+208
+88
+253
+cur-temp
+cur-temp
+2
+1
+11
+
+MONITOR
+118
+209
+182
+254
+cur-moist
+cur-moist
+2
+1
+11
+
+PLOT
+22
+298
+222
+448
+Temperature Graph
+Time (months)
+Temperature (c)
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -14835848 true "" "plot cur-temp"
+
+PLOT
+22
+481
+222
+631
+Moisture over Time
+Time (months)
+current moisture
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"cur-moist" 1.0 0 -16777216 true "" "plot cur-moist"
 
 @#$#@#$#@
 ## WHAT IS IT?
