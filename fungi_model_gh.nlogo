@@ -390,13 +390,29 @@
 
     to add-litter ;Add extra litter year round add extra litter during fall
      ask patches [
-        if random 100 < 0.25 * ground-litter-percent [
+      if random 100 < 0.25 * ground-litter-percent [
       set matter-decomp matter-decomp + random-float 0.1 ;+ 0.1
       if matter-decomp > 1 [set matter-decomp 1]
+       ;update patch colors
       ifelse matter-decomp >= 0.3
       [set decomp? true set pcolor scale-color brown matter-decomp brown-hi brown-lo]
       [set pcolor green set decomp? false]
       ]
+      ;fall
+      let week ticks mod 48
+      if week > 35 and week <= 47 [
+        if random 100 < 0.5 * ground-litter-percent [
+        set matter-decomp matter-decomp + random-float 0.1 + 0.1
+        if matter-decomp > 1 [set matter-decomp 1]
+        ;update patch colors
+        ifelse matter-decomp >= 0.3
+        [set decomp? true set pcolor scale-color brown matter-decomp brown-hi brown-lo]
+        [set pcolor green set decomp? false]
+      ]
+      ]
+
+
+
     ]
     end
 
