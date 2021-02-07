@@ -351,7 +351,7 @@
                  let fight2 self
                  let fight2-rank rank
                  let rank-diff fight1-rank - fight2-rank
-        if (random-float 1) <= 1 / (-22.22 * (rank-diff - 0.1) + 20) [die]
+        if (random-float 1) <= 1 / (-3.33 * (rank-diff - 0.1) + 3) [die]
                 ]
             ]
 
@@ -622,8 +622,8 @@ PLOT
 1258
 168
 Brown Patch Number
-NIL
-NIL
+Time
+Number of Brown Patches
 0.0
 10.0
 0.0
@@ -632,7 +632,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot count patches [with decomp?]"
+"default" 1.0 0 -6459832 true "" "plot count patches [with decomp?]"
 
 @#$#@#$#@
 ## WHAT IS IT?
