@@ -77,8 +77,8 @@
     end
 
     to initialize-vars
-    set cur-temp 22
-    set cur-moist -.5
+    set cur-temp  22
+    set cur-moist -0.5
 
     set cur-growth1 0
     set cur-growth2 0
@@ -378,7 +378,7 @@ to grow-f7s
                  let fight2-rank rank
                  let rank-diff fight1-rank - fight2-rank
         ;since runs 2x per pair, only smth happens when fight1 wins
-        if rank-diff > 0 and (random-float 1) <= 1 / (-22.22 * rank-diff + 20) [
+                 if (random-float 1) <= 1 / (-22.22 * (rank-diff - 0.1) + 20) [
           die
 
           if [ color ] of fight1 = f1color
@@ -478,13 +478,13 @@ to grow-f7s
     end
 
     to death-fungi ;die if growth rate < 25% of max
-      ask f1s [if cur-growth-rate1 < 0.25 * max-rate1 [die]]
-        ask f2s [if cur-growth-rate2 < 0.25 * max-rate2 [die]]
-        ask f3s [if cur-growth-rate3 < 0.25 * max-rate3 [die]]
-        ask f4s [if cur-growth-rate4 < 0.25 * max-rate4 [die]]
-        ask f5s [if cur-growth-rate5 < 0.25 * max-rate5 [die]]
-        ask f6s [if cur-growth-rate6 < 0.25 * max-rate6 [die]]
-        ask f7s [if cur-growth-rate7 < 0.25 * max-rate7 [die]]
+      ask f1s [if cur-growth-rate1 < 0.1 * max-rate1 [die]]
+        ask f2s [if cur-growth-rate2 < 0.1 * max-rate2 [die]]
+        ask f3s [if cur-growth-rate3 < 0.1 * max-rate3 [die]]
+        ask f4s [if cur-growth-rate4 < 0.1 * max-rate4 [die]]
+        ask f5s [if cur-growth-rate5 < 0.1 * max-rate5 [die]]
+        ask f6s [if cur-growth-rate6 < 0.1 * max-rate6 [die]]
+        ask f7s [if cur-growth-rate7 < 0.1 * max-rate7 [die]]
     end
 
 
@@ -636,7 +636,7 @@ ground-litter-percent
 ground-litter-percent
 0
 100
-75.0
+100.0
 1
 1
 NIL
