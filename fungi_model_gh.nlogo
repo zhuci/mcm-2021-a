@@ -103,6 +103,8 @@
     set new-growth4 0
     set new-growth5 0
     set new-growth6 0
+  set new-growth7 0
+
     set decomp-rate1 0.0180
     set decomp-rate2 0.0474
     set decomp-rate3 0.0153
@@ -349,20 +351,7 @@
                  let fight2 self
                  let fight2-rank rank
                  let rank-diff fight1-rank - fight2-rank
-                 if rank-diff > 0.7 and rank-diff <= 1 [die
-                 ;ask patch-here[
-                 ;sprout-[breed] of fight1 1 [set color f1color]
-                 ];]
-                 if rank-diff > 0.4 and rank-diff <= 0.7 [
-                 if (random 100) <= 50 [
-                   die
-                 ]
-                 ] ;50
-                 if rank-diff > 0.1 and rank-diff <= 0.4 [
-                 if (random 100) < 33 [
-                   die
-                 ]
-                 ] ;50] ;33
+        if (random-float 1) <= 1 / (-22.22 * (rank-diff - 0.1) + 20) [die]
                 ]
             ]
 
