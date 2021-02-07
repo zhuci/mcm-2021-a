@@ -66,7 +66,7 @@
 
     grow-fungi
     fight-fungi
-    ;death-fungi
+    death-fungi
     decompose
     add-litter
 
@@ -103,14 +103,13 @@
     set new-growth4 0
     set new-growth5 0
     set new-growth6 0
-
-    set decomp-rate1 0.417 / 100
-    set decomp-rate2 1.1079 / 100
-    set decomp-rate3 0.3548 / 100
-    set decomp-rate4 0.2023 / 100
-    set decomp-rate5 2.3568 / 100
-    set decomp-rate6 1.4061 / 100
-    set decomp-rate7 0.8027 / 100
+    set decomp-rate1 0.0180
+    set decomp-rate2 0.0474
+    set decomp-rate3 0.0153
+    set decomp-rate4 0.00878
+    set decomp-rate5 0.0987
+    set decomp-rate6 0.0598
+    set decomp-rate7 0.0345
 
     set temp-at-maxr1 23.81
     set temp-at-maxr2 28.54
@@ -136,13 +135,13 @@
     set rank6 0.284
     set rank7 0.634
 
-    set max-rate1 .768 * 0.7
-    set max-rate2 11.89 * 0.7
-    set max-rate3 7.08 * 0.7
-    set max-rate4 1.31 * 0.7
-    set max-rate5 12.16 * 0.7
-    set max-rate6 7.55 * 0.7
-    set max-rate7 10.65 * 0.7
+    set max-rate1 .768
+    set max-rate2 11.89
+    set max-rate3 7.08
+    set max-rate4 1.31
+    set max-rate5 12.16
+    set max-rate6 7.55
+    set max-rate7 10.65
 
     set f1color red
     set f2color orange
@@ -180,56 +179,56 @@
 
     to calculate-growth-rate
       ifelse cur-temp <= temp-at-maxr1
-        [set cur-growth-rate1 0.7 * (.0224 * cur-temp - .24)]
-        [set cur-growth-rate1 0.7 * (-.0568 * cur-temp + 2.12)]
+        [set cur-growth-rate1 3 * (.0224 * cur-temp - .24)]
+        [set cur-growth-rate1 3 * (-.0568 * cur-temp + 2.12)]
 
         ifelse cur-moist <= moist-at-maxr1
         [set cur-growth-rate1 cur-growth-rate1 * (-.443 * cur-moist + .66)]
         [set cur-growth-rate1 cur-growth-rate1 * (.12 * cur-moist + 1.09)]
 
         ifelse cur-temp <= temp-at-maxr2
-        [set cur-growth-rate2 0.7 * (.451 * cur-temp - .93)*(-.637 * cur-moist + .66)]
-        [set cur-growth-rate2 0.7 * (-1.44 * cur-temp + 52.85)*(.169 * cur-moist + 1.09)]
+        [set cur-growth-rate2 3 * (.451 * cur-temp - .93)*(-.637 * cur-moist + .66)]
+        [set cur-growth-rate2 3 * (-1.44 * cur-temp + 52.85)*(.169 * cur-moist + 1.09)]
 
         ifelse cur-moist <= moist-at-maxr2
         [set cur-growth-rate2 cur-growth-rate2 * (-.796 * cur-moist + .66)]
         [set cur-growth-rate2 cur-growth-rate2 * (.23 * cur-moist + 1.1)]
 
         ifelse cur-temp <= temp-at-maxr3
-        [set cur-growth-rate3 0.7 * (0.33 * cur-temp - 2.57)*(-.524 * cur-moist + .68)]
-        [set cur-growth-rate3 0.7 * (-1.21 * cur-temp + 42.4)*(.172 * cur-moist + 1.1)]
+        [set cur-growth-rate3 3 * (0.33 * cur-temp - 2.57)*(-.524 * cur-moist + .68)]
+        [set cur-growth-rate3 3 * (-1.21 * cur-temp + 42.4)*(.172 * cur-moist + 1.1)]
 
         ifelse cur-moist <= moist-at-maxr3
         [set cur-growth-rate3 cur-growth-rate3 * (-.541 * cur-moist + .68)]
         [set cur-growth-rate3 cur-growth-rate3 * (.197 * cur-moist + 1.12)]
 
         ifelse cur-temp <= temp-at-maxr4
-        [set cur-growth-rate4 0.7 * (0.0616 * cur-temp - .34)*(-.620 * cur-moist + .67)]
-        [set cur-growth-rate4 0.7 * (-.152 * cur-temp + 5.42)*(.231 * cur-moist + 1.12)]
+        [set cur-growth-rate4 3 * (0.0616 * cur-temp - .34)*(-.620 * cur-moist + .67)]
+        [set cur-growth-rate4 3 * (-.152 * cur-temp + 5.42)*(.231 * cur-moist + 1.12)]
 
         ifelse cur-moist <= moist-at-maxr4
         [set cur-growth-rate4 cur-growth-rate4 * (-.637 * cur-moist + .66)]
         [set cur-growth-rate4 cur-growth-rate4 * (.169 * cur-moist + 1.09)]
 
         ifelse cur-temp <= temp-at-maxr5
-        [set cur-growth-rate5 0.7 * (0.438 * cur-temp - 1.11)*(-1.32 * cur-moist + .66)]
-        [set cur-growth-rate5 0.7 * (-1.60 * cur-temp + 60.81)*(.318 * cur-moist + 1.08)]
+        [set cur-growth-rate5 3 * (0.438 * cur-temp - 1.11)*(-1.32 * cur-moist + .66)]
+        [set cur-growth-rate5 3 * (-1.60 * cur-temp + 60.81)*(.318 * cur-moist + 1.08)]
 
         ifelse cur-moist <= moist-at-maxr5
         [set cur-growth-rate5 cur-growth-rate5 * (-1.32 * cur-moist + .66)]
         [set cur-growth-rate5 cur-growth-rate5 * (.318 * cur-moist + 1.08)]
 
         ifelse cur-temp <= temp-at-maxr6
-        [set cur-growth-rate6 0.7 * (.423 * cur-temp - 4.62)*(-.443 * cur-moist + .66)]
-        [set cur-growth-rate6 0.7 * (-1.35 * cur-temp + 44.35)*(.12 * cur-moist + 1.09)]
+        [set cur-growth-rate6 3 * (.423 * cur-temp - 4.62)*(-.443 * cur-moist + .66)]
+        [set cur-growth-rate6 3 * (-1.35 * cur-temp + 44.35)*(.12 * cur-moist + 1.09)]
 
         ifelse cur-moist <= moist-at-maxr6
         [set cur-growth-rate6 cur-growth-rate6 * (-1.47 * cur-moist + .65)]
         [set cur-growth-rate6 cur-growth-rate6 * (.327 * cur-moist + 1.08)]
 
         ifelse cur-temp <= temp-at-maxr7
-        [set cur-growth-rate7 0.7 * (.405 * cur-temp - 3.07)*(-.97 * cur-moist + .66)]
-        [set cur-growth-rate7 0.7 * (-1.27 * cur-temp + 53.01)*(.281 * cur-moist + 1.1)]
+        [set cur-growth-rate7 3 * (.405 * cur-temp - 3.07)*(-.97 * cur-moist + .66)]
+        [set cur-growth-rate7 3 * (-1.27 * cur-temp + 53.01)*(.281 * cur-moist + 1.1)]
 
         ifelse cur-moist <= moist-at-maxr7
         [set cur-growth-rate7 cur-growth-rate7 * (-.772 * cur-moist + .67)]
@@ -246,9 +245,9 @@
     set cur-growth7  cur-growth-rate7 + cur-growth7
 
     ;f1
-    if cur-growth1 > 10 [
-    set new-growth1 floor(cur-growth1 / 10)
-    set cur-growth1 (cur-growth1 - new-growth1 * 10)
+    if cur-growth1 > 25 [
+    set new-growth1 floor(cur-growth1 / 25)
+    set cur-growth1 (cur-growth1 - new-growth1 * 25)
     ask patches with [any? f1s-here]
          [
          ask neighbors with [decomp? and not any? other turtles-here]
@@ -260,9 +259,9 @@
     ]
 
     ;f2
-    if cur-growth2 > 10 [
-    set new-growth2 floor(cur-growth2 / 10)
-    set cur-growth2 (cur-growth2 - new-growth2 * 10)
+    if cur-growth2 > 25 [
+    set new-growth2 floor(cur-growth2 / 25)
+    set cur-growth2 (cur-growth2 - new-growth2 * 25)
     ask patches with [any? f2s-here]
          [
          ask neighbors with [decomp? and not any? other turtles-here]
@@ -273,9 +272,9 @@
     ]
 
     ;f3
-    if cur-growth3 > 10 [
-    set new-growth3 floor(cur-growth3 / 10)
-    set cur-growth3 (cur-growth3 - new-growth3 * 10)
+    if cur-growth3 > 25 [
+    set new-growth3 floor(cur-growth3 / 25)
+    set cur-growth3 (cur-growth3 - new-growth3 * 25)
     ask patches with [any? f3s-here]
          [
          ask neighbors with [decomp? and not any? other turtles-here]
@@ -286,9 +285,9 @@
     ]
 
     ;f4
-    if cur-growth4 > 10 [
-    set new-growth4 floor(cur-growth4 / 10)
-    set cur-growth4 (cur-growth4 - new-growth4 * 10)
+    if cur-growth4 > 25 [
+    set new-growth4 floor(cur-growth4 / 25)
+    set cur-growth4 (cur-growth4 - new-growth4 * 25)
     ask patches with [any? f4s-here]
          [
          ask neighbors with [decomp? and not any? other turtles-here]
@@ -299,9 +298,9 @@
     ]
 
     ;f5
-    if cur-growth5 > 10 [
-    set new-growth5 floor(cur-growth5 / 10)
-    set cur-growth5 (cur-growth5 - new-growth5 * 10)
+    if cur-growth5 > 25 [
+    set new-growth5 floor(cur-growth5 / 25)
+    set cur-growth5 (cur-growth5 - new-growth5 * 25)
     ask patches with [any? f5s-here]
          [
          ask neighbors with [decomp? and not any? other turtles-here]
@@ -312,9 +311,9 @@
     ]
 
     ;f6
-    if cur-growth6 > 10 [
-    set new-growth6 floor(cur-growth5 / 10)
-    set cur-growth6 (cur-growth5 - new-growth5 * 10)
+    if cur-growth6 > 25 [
+    set new-growth6 floor(cur-growth5 / 25)
+    set cur-growth6 (cur-growth5 - new-growth5 * 25)
     ask patches with [any? f6s-here]
          [
          ask neighbors with [decomp? and not any? other turtles-here]
@@ -325,9 +324,9 @@
     ]
 
     ;f7
-    if cur-growth7 > 10 [
-    set new-growth7 floor(cur-growth7 / 10)
-    set cur-growth7 (cur-growth7 - new-growth7 * 10)
+    if cur-growth7 > 25 [
+    set new-growth7 floor(cur-growth7 / 25)
+    set cur-growth7 (cur-growth7 - new-growth7 * 25)
     ask patches with [any? f7s-here]
          [
          ask neighbors with [decomp? and not any? other turtles-here]
@@ -388,19 +387,19 @@
 
     end
 
-    to add-litter ;Add extra litter year round add extra litter during fall
-     ask patches [
+    to add-litter ;only add litter during fall
+  ask patches [
         if random 100 < 0.25 * ground-litter-percent [
-      set matter-decomp matter-decomp + random-float 0.1 ;+ 0.1
+      set matter-decomp matter-decomp + random-float 0.1
       if matter-decomp > 1 [set matter-decomp 1]
       ifelse matter-decomp >= 0.3
       [set decomp? true set pcolor scale-color brown matter-decomp brown-hi brown-lo]
       [set pcolor green set decomp? false]
-      ]
+    ]
     ]
     end
 
-    to death-fungi ; die if growth rate < 25% of max
+    to death-fungi ;die if growth rate < 25% of max
       ask f1s [if cur-growth-rate1 < 0.25 * max-rate1 [die]]
         ask f2s [if cur-growth-rate2 < 0.25 * max-rate2 [die]]
         ask f3s [if cur-growth-rate3 < 0.25 * max-rate3 [die]]
@@ -566,15 +565,15 @@ NIL
 HORIZONTAL
 
 SLIDER
-22
-90
-196
-123
+24
+88
+198
+121
 initial-fungi-per-cluster
 initial-fungi-per-cluster
 0
 100
-100.0
+80.0
 1
 1
 NIL
@@ -634,8 +633,8 @@ PLOT
 1258
 168
 Brown Patch Number
-Time
-Patches Currently Brown
+NIL
+NIL
 0.0
 10.0
 0.0
@@ -644,7 +643,7 @@ true
 false
 "" ""
 PENS
-"d" 1.0 0 -2674135 true "" "plot count patches with [decomp?]"
+"default" 1.0 0 -16777216 true "" "plot count patches [with decomp?]"
 
 @#$#@#$#@
 ## WHAT IS IT?
