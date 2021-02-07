@@ -35,12 +35,14 @@
 
     to setup
     clear-all
-    set brown-hi 1 set brown-lo 0
+    set brown-hi 1 set brown-lo -0.25
     ask patches [
         ; patches are ground litter or not
         ifelse random 100 < ground-litter-percent
-        [set matter-decomp 0.80 set decomp? true
-            set pcolor scale-color brown matter-decomp brown-hi brown-lo]
+        [
+         set matter-decomp random-float 0.6 + 0.3
+         set decomp? true
+         set pcolor scale-color brown matter-decomp brown-hi brown-lo]
         [set decomp? false set matter-decomp 0.20 set pcolor green]
 
         set wait-time 0
@@ -548,7 +550,7 @@ ground-litter-percent
 ground-litter-percent
 0
 100
-80.0
+75.0
 1
 1
 NIL
