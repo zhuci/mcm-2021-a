@@ -390,8 +390,8 @@
 
     to add-litter ;Add extra litter year round add extra litter during fall
      ask patches [
-      if random 100 < 0.25 * ground-litter-percent [
-      set matter-decomp matter-decomp + random-float 0.1 ;+ 0.1
+      if random 100 < 0.20 * ground-litter-percent [
+      set matter-decomp matter-decomp + random-float 0.05 ;+ 0.1
       if matter-decomp > 1 [set matter-decomp 1]
        ;update patch colors
       ifelse matter-decomp >= 0.3
@@ -645,10 +645,10 @@ PENS
 "f7s-decomp" 1.0 0 -5825686 true "" "plot amount-decomp7"
 
 PLOT
-1058
-18
-1258
-168
+1255
+31
+1455
+181
 Brown Patch Number
 Time
 Patches Currently Brown
