@@ -35,7 +35,7 @@
 
     to setup
     clear-all
-    set brown-hi 1 set brown-lo 0
+    set brown-hi 1 set brown-lo -.25
     ask patches [
         ; patches are ground litter or not
         ifelse random 100 < ground-litter-percent
@@ -386,7 +386,15 @@
     end
 
     to add-litter ;only add litter during fall
-
+  ask patches [
+        if random 100 < 0.25 * ground-litter-percent [
+      set matter-decomp matter-decomp + random-float 0.1
+      if matter-decomp > 1 [set matter-decomp 1]
+      ifelse matter-decomp >= 0.3
+      [set decomp? true set pcolor scale-color brown matter-decomp brown-hi brown-lo]
+      [set pcolor green set decomp? false]
+    ]
+    ]
     end
 
     to death-fungi ;die if growth rate < 25% of max
@@ -506,10 +514,10 @@ ticks
 30.0
 
 BUTTON
-32
-50
-95
-83
+36
+10
+99
+43
 setup
 setup
 NIL
@@ -523,10 +531,10 @@ NIL
 1
 
 BUTTON
-116
-51
-179
-84
+117
+10
+180
+43
 go
 go
 T
@@ -540,10 +548,10 @@ NIL
 1
 
 SLIDER
-19
-109
-191
-142
+23
+50
+195
+83
 ground-litter-percent
 ground-litter-percent
 0
@@ -555,10 +563,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-20
-162
-194
-195
+24
+88
+198
+121
 initial-fungi-per-cluster
 initial-fungi-per-cluster
 0
@@ -616,6 +624,24 @@ PENS
 "f5s-decomp" 1.0 0 -14070903 true "" "plot amount-decomp5"
 "f6s-decomp" 1.0 0 -8630108 true "" "plot amount-decomp6"
 "f7s-decomp" 1.0 0 -5825686 true "" "plot amount-decomp7"
+
+PLOT
+1058
+18
+1258
+168
+Brown Patch Number
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot count patches with decomp?"
 
 @#$#@#$#@
 ## WHAT IS IT?
