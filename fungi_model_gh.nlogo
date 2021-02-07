@@ -639,7 +639,7 @@ PLOT
 181
 Brown Patch Number
 Time
-Decomposing Patches
+Number of Brown Patches
 0.0
 10.0
 0.0
