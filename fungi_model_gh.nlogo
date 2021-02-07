@@ -478,13 +478,13 @@ to grow-f7s
     end
 
     to death-fungi ;die if growth rate < 25% of max
-      ask f1s [if cur-growth-rate1 < 0.2 * max-rate1 [die]]
-        ask f2s [if cur-growth-rate2 < 0.2 * max-rate2 [die]]
-        ask f3s [if cur-growth-rate3 < 0.2 * max-rate3 [die]]
-        ask f4s [if cur-growth-rate4 < 0.2 * max-rate4 [die]]
-        ask f5s [if cur-growth-rate5 < 0.2 * max-rate5 [die]]
-        ask f6s [if cur-growth-rate6 < 0.2 * max-rate6 [die]]
-        ask f7s [if cur-growth-rate7 < 0.2 * max-rate7 [die]]
+      ask f1s [if cur-growth-rate1 < 0.1 * max-rate1 [die]]
+        ask f2s [if cur-growth-rate2 < 0.1 * max-rate2 [die]]
+        ask f3s [if cur-growth-rate3 < 0.1 * max-rate3 [die]]
+        ask f4s [if cur-growth-rate4 < 0.1 * max-rate4 [die]]
+        ask f5s [if cur-growth-rate5 < 0.1 * max-rate5 [die]]
+        ask f6s [if cur-growth-rate6 < 0.1 * max-rate6 [die]]
+        ask f7s [if cur-growth-rate7 < 0.1 * max-rate7 [die]]
     end
 
 
@@ -636,7 +636,7 @@ ground-litter-percent
 ground-litter-percent
 0
 100
-83.0
+100.0
 1
 1
 NIL
