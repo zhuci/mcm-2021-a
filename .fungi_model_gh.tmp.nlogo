@@ -157,25 +157,25 @@
 
     to sprout-fungi
     ask n-of initial-fungi-per-cluster patches with [decomp? and not any? other turtles-here]
-    [sprout-f1s 1 [set color red set rank rank1]]
+    [sprout-f1s 1 [set color f1color set rank rank1]]
 
     ask n-of initial-fungi-per-cluster patches with [decomp? and not any? other turtles-here]
-    [sprout-f2s 1 [set color orange set rank rank2]]
+    [sprout-f2s 1 [set color f2color set rank rank2]]
 
     ask n-of initial-fungi-per-cluster patches with [decomp? and not any? other turtles-here]
-    [sprout-f3s 1 [set color yellow set rank rank3]]
+    [sprout-f3s 1 [set color f3color set rank rank3]]
 
     ask n-of initial-fungi-per-cluster patches with [decomp? and not any? other turtles-here]
-    [sprout-f4s 1 [set color cyan set rank rank4]]
+    [sprout-f4s 1 [set color f4color set rank rank4]]
 
     ask n-of initial-fungi-per-cluster patches with [decomp? and not any? other turtles-here]
-    [sprout-f5s 1 [set color blue set rank rank5]]
+    [sprout-f5s 1 [set color f5color set rank rank5]]
 
     ask n-of initial-fungi-per-cluster patches with [decomp? and not any? other turtles-here]
-    [sprout-f6s 1 [set color violet set rank rank6]]
+    [sprout-f6s 1 [set color f6color set rank rank6]]
 
     ask n-of initial-fungi-per-cluster patches with [decomp? and not any? other turtles-here]
-    [sprout-f7s 1 [set color magenta set rank rank7]]
+    [sprout-f7s 1 [set color f7color set rank rank7]]
 
     end
 
@@ -246,6 +246,21 @@
     set cur-growth6  cur-growth-rate6 + cur-growth6
     set cur-growth7  cur-growth-rate7 + cur-growth7
 
+  let events shuffle [1  3 4 5 6 7]
+  foreach events [ event ->
+    if event = 1 [grow-f1s]
+    if event = 2 [grow-f2s]
+    if event = 3 [grow-f3s]
+    if event = 4 [grow-f4s]
+    if event = 5 [grow-f5s]
+    if event = 6 [grow-f6s]
+    if event = 7 [grow-f7s]
+  ]
+
+
+end
+
+  to grow-f1s
     ;f1
     if cur-growth1 > 10 [
     set new-growth1 floor(cur-growth1 / 10)
@@ -259,7 +274,9 @@
         set new-growth1 0
 
     ]
+end
 
+to grow-f2s
     ;f2
     if cur-growth2 > 10 [
     set new-growth2 floor(cur-growth2 / 10)
@@ -272,7 +289,9 @@
         ]
         set new-growth2 0
     ]
+end
 
+to grow-f3s
     ;f3
     if cur-growth3 > 10 [
     set new-growth3 floor(cur-growth3 / 10)
@@ -285,7 +304,9 @@
         ]
         set new-growth3 0
     ]
+end
 
+to grow-f4s
     ;f4
     if cur-growth4 > 10 [
     set new-growth4 floor(cur-growth4 / 10)
@@ -298,7 +319,9 @@
         ]
         set new-growth4 0
     ]
+end
 
+to grow-f5s
     ;f5
     if cur-growth5 > 10 [
     set new-growth5 floor(cur-growth5 / 10)
@@ -311,7 +334,9 @@
         ]
         set new-growth5 0
     ]
+end
 
+to grow-f6s
     ;f6
     if cur-growth6 > 10 [
     set new-growth6 floor(cur-growth5 / 10)
@@ -324,7 +349,9 @@
         ]
         set new-growth6 0
     ]
+end
 
+to grow-f7s
     ;f7
     if cur-growth7 > 10 [
     set new-growth7 floor(cur-growth7 / 10)
@@ -337,7 +364,6 @@
         ]
         set new-growth7 0
     ]
-
     end
 
     to fight-fungi
@@ -351,7 +377,9 @@
                  let fight2 self
                  let fight2-rank rank
                  let rank-diff fight1-rank - fight2-rank
-                 if (random-float 1) <= 1 / (-22.22 * (rank-diff - 0.1) + 20) [die]
+                 if (random-float 1) <= 1 / (-22.22 * (rank-diff - 0.1) + 20) [
+          die
+        ]
                 ]
             ]
 
@@ -639,7 +667,7 @@ PLOT
 181
 Brown Patch Number
 Time
-Decomposing Patches
+Number of Brown Patches
 0.0
 10.0
 0.0
