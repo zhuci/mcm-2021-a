@@ -22,6 +22,7 @@
 
     globals [cur-temp cur-moist
     f1color f2color f3color f4color f5color f6color f7color brown-hi brown-lo brown-thresh
+    random-litter-cover random-litter-matter fall-litter-cover fall-litter-matter
 
     decomp-rate1  cur-growth1 cur-growth-rate1 new-growth1 amount-decomp1 temp-at-maxr1 moist-at-maxr1 rank1 max-rate1
     decomp-rate2  cur-growth2 cur-growth-rate2 new-growth2 amount-decomp2 temp-at-maxr2 moist-at-maxr2 rank2 max-rate2
@@ -496,15 +497,11 @@ to grow-f7s
     end
 
     to add-litter ;Add extra litter year round add extra litter during fall
-     (ifelse
-     climate = "arid"
-     [];arid-climate]
-     climate = "temperate"
-     []);temperate-climate])
+
 
      ask patches [
-      if random 100 < 0.05 * ground-litter-percent [
-      set matter-decomp matter-decomp + random-float 0.05 ;+ 0.1
+      if random 100 < random-litter-cover * ground-litter-percent [
+      set matter-decomp matter-decomp + random-float random-litter-matter ;+ 0.1
       if matter-decomp > 1 [set matter-decomp 1]
        ;update patch colors
       ifelse matter-decomp >= brown-thresh
@@ -514,8 +511,8 @@ to grow-f7s
       ;fall
       let week ticks mod 48
       if week > 35 and week <= 47 [
-        if random 100 < 0.3 * ground-litter-percent [
-        set matter-decomp matter-decomp + random-float 0.1
+        if random 100 < fall-litter-cover * ground-litter-percent [
+        set matter-decomp matter-decomp + random-float fall-litter-matter
         if matter-decomp > 1 [set matter-decomp 1]
         ;update patch colors and die if turn green
         ifelse matter-decomp >= brown-thresh
@@ -624,6 +621,12 @@ to arid-climate ;arid sabha, ly
   set cur-moist -3
   let week ticks mod 48
 
+  ;add litter
+  set random-litter-cover 0.1
+  set random-litter-matter 0.005
+  set fall-litter-cover 0
+  set fall-litter-matter 0
+
   if week >= 0 and week < 4 [ ;jan
     let min-temp 9
     let max-temp 18
@@ -727,6 +730,12 @@ to semi-arid-climate ;Reno, Nevada
   ;set cur-temp 25
   set cur-moist -1
   let week ticks mod 48
+
+  ;add litter
+  set random-litter-cover 0.1
+  set random-litter-matter 0.1
+  set fall-litter-cover 0.2
+  set fall-litter-matter 0.15
 
   if week >= 0 and week < 4 [ ;jan
     let min-temp -4
@@ -833,6 +842,12 @@ to temperate-climate ;houston
   set cur-moist -0.5
   let week ticks mod 48
 
+  ;add litter
+  set random-litter-cover 0.2
+  set random-litter-matter 0.15
+  set fall-litter-cover 0.3
+  set fall-litter-matter 0.2
+
   if week >= 0 and week < 4 [ ;jan
     let min-temp (43.2 - 32) * 5 / 9
     let avg-temp (53.1 - 32) * 5 / 9
@@ -936,6 +951,12 @@ to boreal-climate ;anchorage, alasksa
   set cur-moist -0.5
   let week ticks mod 48
 
+  ;add litter
+  set random-litter-cover 0.1
+  set random-litter-matter 0.1
+  set fall-litter-cover 0.2
+  set fall-litter-matter 0.2
+
   if week >= 0 and week < 4 [ ;jan
     let min-temp -11
     let max-temp -7
@@ -1038,6 +1059,12 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
   ;set cur-temp 25
   set cur-moist -0.1
   let week ticks mod 48
+
+  ;add litter
+  set random-litter-cover 0.2
+  set random-litter-matter 0.2
+  set fall-litter-cover 0.5
+  set fall-litter-matter 0.3
 
   if week >= 0 and week < 4 [ ;jan
     let min-temp 24
@@ -1209,7 +1236,7 @@ ground-litter-percent
 ground-litter-percent
 0
 100
-71.0
+90.0
 1
 1
 NIL
