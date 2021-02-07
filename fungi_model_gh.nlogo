@@ -378,57 +378,77 @@ to grow-f7s
                  let fight2-rank rank
                  let rank-diff fight1-rank - fight2-rank
         ;since runs 2x per pair, only smth happens when fight1 wins
-        if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / 10 [ ; 1 / (-17.5 * rank-diff + 17.5) [ ; 1 / (-21.88 * (rank-diff - 0.2) + 17.5)
-          die
+        ;if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / 10 [ ; 1 / (-17.5 * rank-diff + 17.5) [ ; 1 / (-21.88 * (rank-diff - 0.2) + 17.5)
+          ;die
 
           if [ color ] of fight1 = f1color
                    [
+                    if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate1) [
+                      die
                     ask patch-here
                     [sprout-f1s 1 [set color f1color set rank rank1]]
+                    ]
                    ]
 
                    if [ color ] of fight1 = f2color
                    [
+                    if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate2) [
+                      die
                     ask patch-here
                     [sprout-f2s 1 [set color f2color set rank rank2]]
+            ]
                    ]
 
                    if [ color ] of fight1 = f3color
                    [
+                    if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate3) [
+                      die
                     ask patch-here
                     [sprout-f3s 1 [set color f3color set rank rank3]]
+              ]
                    ]
 
                    if [ color ] of fight1 = f4color
                    [
+          if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate4) [
+                      die
                     ask patch-here
                     [sprout-f4s 1 [set color f4color set rank rank4]]
                    ]
+        ]
 
                    if [ color ] of fight1 = f5color
                    [
+          if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate5) [
+                      die
                     ask patch-here
                     [sprout-f5s 1 [set color f5color set rank rank5]]
                    ]
+        ]
 
                    if [ color ] of fight1 = f6color
                    [
+          if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate6) [
+                      die
                     ask patch-here
                     [sprout-f6s 1 [set color f6color set rank rank6]]
                    ]
+        ]
 
                    if [ color ] of fight1 = f7color
                    [
+          if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate7) [
+                      die
                     ask patch-here
                     [sprout-f7s 1 [set color f7color set rank rank7]]
                    ]
+        ]
 
                  ]
                  ;[sprout-f1s 1 [set color red set rank rank1]]
                  ;if is-f1? [set p-colo]
         ]
-                ]
-            ]
+  ]
 
             ;ask neighbors with [any? other turtles-here with [ breed != [ breed ] of fight1]] [
             ;    let fight2 one-of turtles-here
@@ -446,7 +466,6 @@ to grow-f7s
         ;if time-waited >= wait-time
         ;[]
         ;]
-
     end
 
     to add-litter ;Add extra litter year round add extra litter during fall
