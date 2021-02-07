@@ -78,7 +78,7 @@
 
     to initialize-vars
     set cur-temp 22
-    set cur-moist -0.5
+    set cur-moist -.5
 
     set cur-growth1 0
     set cur-growth2 0
@@ -378,7 +378,7 @@ to grow-f7s
                  let fight2-rank rank
                  let rank-diff fight1-rank - fight2-rank
         ;since runs 2x per pair, only smth happens when fight1 wins
-                 if (random-float 1) <= 1 / (-22.22 * (rank-diff - 0.1) + 20) [
+        if rank-diff > 0.1 and (random-float 1) <= 1 / (-22.22 * (rank-diff - 0.1) + 20) [
           die
 
           if [ color ] of fight1 = f1color
