@@ -8,7 +8,7 @@
     breed [f6s f6]
     breed [f7s f7]
 
-    ;f1s-own [cur-growth1]
+    ;f1s-own [cur-growth1]S
     ;f2s-own [cur-growth2]
     ;f3s-own [cur-growth3]
     ;f4s-own [cur-growth4]
@@ -376,15 +376,31 @@
 
     end
 
-    to add-litter ;only add litter during fall
-  ask patches [
-        if random 100 < 0.25 * ground-litter-percent [
-      set matter-decomp matter-decomp + random-float 0.1
+    to add-litter ;Add extra litter year round add extra litter during fall
+     ask patches [
+      if random 100 < 0.20 * ground-litter-percent [
+      set matter-decomp matter-decomp + random-float 0.05 ;+ 0.1
       if matter-decomp > 1 [set matter-decomp 1]
+       ;update patch colors
       ifelse matter-decomp >= 0.3
       [set decomp? true set pcolor scale-color brown matter-decomp brown-hi brown-lo]
       [set pcolor green set decomp? false]
-    ]
+      ]
+      ;fall
+      let week ticks mod 48
+      if week > 35 and week <= 47 [
+        if random 100 < 0.5 * ground-litter-percent [
+        set matter-decomp matter-decomp + random-float 0.1 + 0.1
+        if matter-decomp > 1 [set matter-decomp 1]
+        ;update patch colors
+        ifelse matter-decomp >= 0.3
+        [set decomp? true set pcolor scale-color brown matter-decomp brown-hi brown-lo]
+        [set pcolor green set decomp? false]
+      ]
+      ]
+
+
+
     ]
     end
 
@@ -617,10 +633,10 @@ PENS
 "f7s-decomp" 1.0 0 -5825686 true "" "plot amount-decomp7"
 
 PLOT
-1058
-18
-1258
-168
+1255
+31
+1455
+181
 Brown Patch Number
 Time
 Number of Brown Patches
