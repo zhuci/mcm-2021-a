@@ -246,9 +246,15 @@
     set cur-growth6  cur-growth-rate6 + cur-growth6
     set cur-growth7  cur-growth-rate7 + cur-growth7
 
-  let events shuffle (1 2 3 4 5 6 7)
+  let events shuffle [1 2 3 4 5 6 7]
   foreach events [ event ->
-
+    if event = 1 [grow-f1s]
+    if event = 2 [grow-f2s]
+    if event = 3 [grow-f3s]
+    if event = 4 [grow-f4s]
+    if event = 5 [grow-f5s]
+    if event = 6 [grow-f6s]
+    if event = 7 [grow-f7s]
   ]
 
 
@@ -366,61 +372,14 @@ to grow-f7s
             let fight1-rank rank
             ask turtles-on (patch-set patch-here neighbors)[ ;(turtle-set self turtles-on neighbors)
 
-                if color != [ color ] of fight1 ;breed != [ breed ] of fight1
+                if breed != [ breed ] of fight1
                 [
                  let fight2 self
                  let fight2-rank rank
                  let rank-diff fight1-rank - fight2-rank
-                 ;since runs 2x per pair, only smth happens when fight1 wins
                  if (random-float 1) <= 1 / (-22.22 * (rank-diff - 0.1) + 20) [
-                   die
-
-                   if [ color ] of fight1 = f1color
-                   [
-                    ask patch-here
-                    [sprout-f1s 1 [set color f1color set rank rank1]]
-                   ]
-
-                   if [ color ] of fight1 = f2color
-                   [
-                    ask patch-here
-                    [sprout-f2s 1 [set color f2color set rank rank2]]
-                   ]
-
-                   if [ color ] of fight1 = f3color
-                   [
-                    ask patch-here
-                    [sprout-f3s 1 [set color f3color set rank rank3]]
-                   ]
-
-                   if [ color ] of fight1 = f4color
-                   [
-                    ask patch-here
-                    [sprout-f4s 1 [set color f4color set rank rank4]]
-                   ]
-
-                   if [ color ] of fight1 = f5color
-                   [
-                    ask patch-here
-                    [sprout-f5s 1 [set color f5color set rank rank5]]
-                   ]
-
-                   if [ color ] of fight1 = f6color
-                   [
-                    ask patch-here
-                    [sprout-f6s 1 [set color f6color set rank rank6]]
-                   ]
-
-                   if [ color ] of fight1 = f7color
-                   [
-                    ask patch-here
-                    [sprout-f7s 1 [set color f7color set rank rank7]]
-                   ]
-
-                 ]
-                 ;[sprout-f1s 1 [set color red set rank rank1]]
-                 ;if is-f1? [set p-colo]
-
+          die
+        ]
                 ]
             ]
 
@@ -447,7 +406,7 @@ to grow-f7s
 
     to add-litter ;Add extra litter year round add extra litter during fall
      ask patches [
-      if random 100 < 0.10 * ground-litter-percent [
+      if random 100 < 0.20 * ground-litter-percent [
       set matter-decomp matter-decomp + random-float 0.05 ;+ 0.1
       if matter-decomp > 1 [set matter-decomp 1]
        ;update patch colors
@@ -458,7 +417,7 @@ to grow-f7s
       ;fall
       let week ticks mod 48
       if week > 35 and week <= 47 [
-        if random 100 < 0.3 * ground-litter-percent [
+        if random 100 < 0.5 * ground-litter-percent [
         set matter-decomp matter-decomp + random-float 0.1
         if matter-decomp > 1 [set matter-decomp 1]
         ;update patch colors
@@ -646,8 +605,8 @@ SLIDER
 initial-fungi-per-cluster
 initial-fungi-per-cluster
 0
-200
-200.0
+100
+80.0
 1
 1
 NIL
