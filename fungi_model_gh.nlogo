@@ -639,7 +639,7 @@ end
         ask f2s [if cur-growth-rate2 < 0.001 * max-rate2 [die]]
         ask f3s [if cur-growth-rate3 < 0.001 * max-rate3 [die]]
         ask f4s [if cur-growth-rate4 < 0.001 * max-rate4 [die]]
-        ask f5s [if cur-growth-rate5 < 100 * max-rate5 [die]]
+        ask f5s [if cur-growth-rate5 < 0.001 * max-rate5 [die]]
         ask f6s [if cur-growth-rate6 < 0.001 * max-rate6 [die]]
         ask f7s [if cur-growth-rate7 < 0.001 * max-rate7 [die]]
     end
@@ -1407,7 +1407,7 @@ ground-litter-percent
 ground-litter-percent
 0
 100
-100.0
+20.0
 1
 1
 NIL
@@ -1422,7 +1422,7 @@ initial-fungi-per-cluster
 initial-fungi-per-cluster
 0
 100
-80.0
+50.0
 1
 1
 NIL
