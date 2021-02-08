@@ -121,7 +121,7 @@
   set fall-litter-cover 0.1
   set fall-litter-matter 0.1
 
-  set death-threshold 0.1
+  set death-threshold 0.005
 
     set cur-growth1 0
     set cur-growth2 0
@@ -745,7 +745,7 @@ to arid-climate ;arid sabha, ly
   ;set cur-temp 25
   set cur-moist -3
   let week ticks mod 48
-  let std-moist 2.4 / 18
+  let std-moist 2.4 / 30
 
   ;add litter
   set random-litter-cover 0.1
@@ -868,7 +868,7 @@ to semi-arid-climate ;Reno, Nevada
   ;set cur-temp 25
   set cur-moist -1
   let week ticks mod 48
-  let std-moist 3.83 / 18
+  let std-moist 3.83 / 30
 
   ;add litter
   set random-litter-cover 0.1
@@ -992,7 +992,7 @@ to temperate-climate ;houston
   ;set cur-temp 25
   set cur-moist -0.5
   let week ticks mod 48
-  let std-moist 0.145 / 18
+  let std-moist 0.145 / 30
 
   ;add litter
   set random-litter-cover 0.2
@@ -1114,7 +1114,7 @@ to boreal-climate ;anchorage, alasksa
   ;set cur-temp 25
   set cur-moist -0.5
   let week ticks mod 48
-  let std-moist .4 / 18
+  let std-moist .4 / 30
 
   ;add litter
   set random-litter-cover 0.1
@@ -1236,7 +1236,7 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
   ;set cur-temp 25
   set cur-moist -0.1
   let week ticks mod 48
-  let std-moist .5 / 18
+  let std-moist .5 / 30
 
   ;add litter
   set random-litter-cover 0.2
@@ -1424,7 +1424,7 @@ ground-litter-percent
 ground-litter-percent
 0
 100
-60.0
+61.0
 1
 1
 NIL
@@ -1519,7 +1519,7 @@ CHOOSER
 climate
 climate
 "arid" "semi-arid" "temperate" "boreal" "tropical-rainforest"
-4
+2
 
 MONITOR
 25
