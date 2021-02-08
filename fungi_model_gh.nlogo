@@ -20,7 +20,7 @@
 
     turtles-own [rank]
 
-    globals [cur-temp cur-moist
+    globals [cur-temp cur-moist death-threshold
     f1color f2color f3color f4color f5color f6color f7color brown-hi brown-lo brown-thresh
     random-litter-cover random-litter-matter fall-litter-cover fall-litter-matter
 
@@ -73,7 +73,18 @@
 
     to go
 
-    (ifelse
+    ;(ifelse
+    ;climate = "arid"
+    ;[arid-climate]
+    ;climate = "semi-arid"
+    ;[semi-arid-climate]
+    ;climate = "temperate"
+    ;[temperate-climate]
+    ;climate = "boreal"
+    ;[boreal-climate]
+    ;climate = "tropical-rainforest"
+    ;[tropical-rainforest-climate])
+  (ifelse
     climate = "arid"
     [arid-climate]
     climate = "semi-arid"
@@ -85,13 +96,12 @@
     climate = "tropical-rainforest"
     [tropical-rainforest-climate])
 
-
+  if ticks >= 1000 [stop]
     calculate-growth-rate
-
     grow-fungi
-    ;fight-fungi
-    ;death-fungi
-  fight-fungi-byrate
+    fight-fungi
+  ;fight-fungi-byrate
+    death-fungi
     decompose
     add-litter
 
@@ -103,8 +113,15 @@
     end
 
     to initialize-vars
-    ;set cur-temp 30
-    ;set cur-moist -4
+  ;lab conditions
+    set cur-temp 22
+    set cur-moist -.5
+  set random-litter-cover 0.05
+  set random-litter-matter 0.05
+  set fall-litter-cover 0.1
+  set fall-litter-matter 0.1
+
+  set death-threshold 0.1
 
     set cur-growth1 0
     set cur-growth2 0
@@ -635,13 +652,13 @@ end
     end
 
     to death-fungi ;die if growth rate < 25% of max
-        ask f1s [if cur-growth-rate1 < 0.005 * max-rate1 [die]]
-        ask f2s [if cur-growth-rate2 < 0.005 * max-rate2 [die]]
-        ask f3s [if cur-growth-rate3 < 0.005 * max-rate3 [die]]
-        ask f4s [if cur-growth-rate4 < 0.005 * max-rate4 [die]]
-        ask f5s [if cur-growth-rate5 < 0.005 * max-rate5 [die]]
-        ask f6s [if cur-growth-rate6 < 0.005 * max-rate6 [die]]
-        ask f7s [if cur-growth-rate7 < 0.005 * max-rate7 [die]]
+        ask f1s [if cur-growth-rate1 < death-threshold * max-rate1 [die]]
+        ask f2s [if cur-growth-rate2 < death-threshold * max-rate2 [die]]
+        ask f3s [if cur-growth-rate3 < death-threshold * max-rate3 [die]]
+        ask f4s [if cur-growth-rate4 < death-threshold * max-rate4 [die]]
+        ask f5s [if cur-growth-rate5 < death-threshold * max-rate5 [die]]
+        ask f6s [if cur-growth-rate6 < death-threshold * max-rate6 [die]]
+        ask f7s [if cur-growth-rate7 < death-threshold * max-rate7 [die]]
     end
 
 
@@ -1407,7 +1424,7 @@ ground-litter-percent
 ground-litter-percent
 0
 100
-100.0
+60.0
 1
 1
 NIL
@@ -1502,7 +1519,7 @@ CHOOSER
 climate
 climate
 "arid" "semi-arid" "temperate" "boreal" "tropical-rainforest"
-0
+4
 
 MONITOR
 25
@@ -1528,24 +1545,6 @@ cur-moist
 
 PLOT
 22
-298
-222
-448
-Temperature Graph
-Time (months)
-Temperature (c)
-0.0
-10.0
-0.0
-10.0
-true
-false
-"" ""
-PENS
-"default" 1.0 0 -14835848 true "" "plot cur-temp"
-
-PLOT
-22
 481
 222
 631
@@ -1561,6 +1560,24 @@ false
 "" ""
 PENS
 "cur-moist" 1.0 0 -16777216 true "" "plot cur-moist"
+
+PLOT
+22
+298
+222
+448
+Temperature Graph
+Time (months)
+Temperature (c)
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -14835848 true "" "plot cur-temp"
 
 @#$#@#$#@
 ## WHAT IS IT?
