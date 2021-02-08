@@ -406,7 +406,7 @@ to grow-f7s
         ;if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / 10 [ ; 1 / (-17.5 * rank-diff + 17.5) [ ; 1 / (-21.88 * (rank-diff - 0.2) + 17.5)
           ;die
 
-          if rank-diff > 0 and [ color ] of fight1 = f1color
+          if [ color ] of fight1 = f1color
                    [
                     if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate1) [
                       die
