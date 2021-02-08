@@ -725,8 +725,8 @@ to arid-climate ;arid sabha, ly
   let std-moist 2.4 / 30
 
   ;add litter
-  set random-litter-cover 0.1
-  set random-litter-matter 0.005
+  set random-litter-cover 0.05
+  set random-litter-matter 0.05
   set fall-litter-cover 0
   set fall-litter-matter 0
 
@@ -848,10 +848,10 @@ to semi-arid-climate ;Reno, Nevada
   let std-moist 3.83 / 30
 
   ;add litter
-  set random-litter-cover 0.1
-  set random-litter-matter 0.1
-  set fall-litter-cover 0.2
-  set fall-litter-matter 0.15
+  set random-litter-cover 0.05
+  set random-litter-matter 0.05
+  set fall-litter-cover 0
+  set fall-litter-matter 0
 
   if week >= 0 and week < 4 [ ;jan
     let min-temp -4
@@ -972,10 +972,10 @@ to temperate-climate ;houston
   let std-moist 0.145 / 30
 
   ;add litter
-  set random-litter-cover 0.2
-  set random-litter-matter 0.15
+  set random-litter-cover 0.05
+  set random-litter-matter 0.05
   set fall-litter-cover 0.3
-  set fall-litter-matter 0.2
+  set fall-litter-matter 0.15
 
   if week >= 0 and week < 4 [ ;jan
     let min-temp (43.2 - 32) * 5 / 9
@@ -1094,10 +1094,10 @@ to boreal-climate ;anchorage, alasksa
   let std-moist .4 / 30
 
   ;add litter
-  set random-litter-cover 0.1
+  set random-litter-cover 0.05
   set random-litter-matter 0.1
   set fall-litter-cover 0.2
-  set fall-litter-matter 0.2
+  set fall-litter-matter 0.1
 
   if week >= 0 and week < 4 [ ;jan
     let min-temp -11
@@ -1216,10 +1216,10 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
   let std-moist .5 / 30
 
   ;add litter
-  set random-litter-cover 0.2
-  set random-litter-matter 0.2
-  set fall-litter-cover 0.5
-  set fall-litter-matter 0.3
+  set random-litter-cover 0.8
+  set random-litter-matter 0.01
+  set fall-litter-cover 0
+  set fall-litter-matter 0
 
   if week >= 0 and week < 4 [ ;jan
     let min-temp 24
@@ -1415,8 +1415,8 @@ SLIDER
 initial-fungi-per-cluster
 initial-fungi-per-cluster
 0
-200
-125.0
+100
+50.0
 1
 1
 NIL
