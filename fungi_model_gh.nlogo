@@ -90,7 +90,7 @@
 
     grow-fungi
     fight-fungi
-    death-fungi
+    ;death-fungi
     decompose
     add-litter
 
@@ -528,7 +528,7 @@ to grow-f7s
         ask f2s [if cur-growth-rate2 < 0.001 * max-rate2 [die]]
         ask f3s [if cur-growth-rate3 < 0.001 * max-rate3 [die]]
         ask f4s [if cur-growth-rate4 < 0.001 * max-rate4 [die]]
-        ask f5s [if cur-growth-rate5 < 0.001 * max-rate5 [die]]
+        ask f5s [if cur-growth-rate5 < 100 * max-rate5 [die]]
         ask f6s [if cur-growth-rate6 < 0.001 * max-rate6 [die]]
         ask f7s [if cur-growth-rate7 < 0.001 * max-rate7 [die]]
     end
@@ -620,8 +620,8 @@ to arid-climate ;arid sabha, ly
   let std-moist 2.4 / 18
 
   ;add litter
-  set random-litter-cover 0.1
-  set random-litter-matter 0.005
+  set random-litter-cover 0.05
+  set random-litter-matter 0.05
   set fall-litter-cover 0
   set fall-litter-matter 0
 
@@ -743,10 +743,10 @@ to semi-arid-climate ;Reno, Nevada
   let std-moist 3.83 / 18
 
   ;add litter
-  set random-litter-cover 0.1
-  set random-litter-matter 0.1
-  set fall-litter-cover 0.2
-  set fall-litter-matter 0.15
+  set random-litter-cover 0.05
+  set random-litter-matter 0.05
+  set fall-litter-cover 0
+  set fall-litter-matter 0
 
   if week >= 0 and week < 4 [ ;jan
     let min-temp -4
@@ -867,10 +867,10 @@ to temperate-climate ;houston
   let std-moist 0.145 / 18
 
   ;add litter
-  set random-litter-cover 0.2
-  set random-litter-matter 0.15
+  set random-litter-cover 0.05
+  set random-litter-matter 0.05
   set fall-litter-cover 0.3
-  set fall-litter-matter 0.2
+  set fall-litter-matter 0.15
 
   if week >= 0 and week < 4 [ ;jan
     let min-temp (43.2 - 32) * 5 / 9
@@ -989,10 +989,10 @@ to boreal-climate ;anchorage, alasksa
   let std-moist .4 / 18
 
   ;add litter
-  set random-litter-cover 0.1
+  set random-litter-cover 0.05
   set random-litter-matter 0.1
   set fall-litter-cover 0.2
-  set fall-litter-matter 0.2
+  set fall-litter-matter 0.1
 
   if week >= 0 and week < 4 [ ;jan
     let min-temp -11
@@ -1225,7 +1225,6 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
   ]
 
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -1297,7 +1296,7 @@ ground-litter-percent
 ground-litter-percent
 0
 100
-75.0
+12.0
 1
 1
 NIL
@@ -1312,7 +1311,7 @@ initial-fungi-per-cluster
 initial-fungi-per-cluster
 0
 100
-100.0
+10.0
 1
 1
 NIL
@@ -1392,7 +1391,7 @@ CHOOSER
 climate
 climate
 "arid" "semi-arid" "temperate" "boreal" "tropical-rainforest"
-3
+1
 
 MONITOR
 25
