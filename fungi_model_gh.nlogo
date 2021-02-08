@@ -90,7 +90,7 @@
 
     grow-fungi
     fight-fungi
-    death-fungi
+    ;death-fungi
     decompose
     add-litter
 
@@ -406,7 +406,7 @@ to grow-f7s
         ;if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / 10 [ ; 1 / (-17.5 * rank-diff + 17.5) [ ; 1 / (-21.88 * (rank-diff - 0.2) + 17.5)
           ;die
 
-          if [ color ] of fight1 = f1color
+          if rank-diff > 0 and [ color ] of fight1 = f1color
                    [
                     if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate1) [
                       die
@@ -1225,7 +1225,6 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
   ]
 
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -1312,7 +1311,7 @@ initial-fungi-per-cluster
 initial-fungi-per-cluster
 0
 100
-100.0
+80.0
 1
 1
 NIL
@@ -1392,7 +1391,7 @@ CHOOSER
 climate
 climate
 "arid" "semi-arid" "temperate" "boreal" "tropical-rainforest"
-3
+2
 
 MONITOR
 25
