@@ -89,8 +89,9 @@
     calculate-growth-rate
 
     grow-fungi
-    fight-fungi
+    ;fight-fungi
     ;death-fungi
+  fight-fungi-byrate
     decompose
     add-litter
 
@@ -492,6 +493,116 @@ to grow-f7s
         ;[]
         ;]
     end
+
+to fight-fungi-byrate
+  let max-rate max (list cur-growth-rate1 cur-growth-rate2 cur-growth-rate3 cur-growth-rate4 cur-growth-rate5 cur-growth-rate6 cur-growth-rate7)
+  ask f1s [
+   set rank cur-growth-rate1 / max-rate
+  ]
+  ask f2s [
+   set rank cur-growth-rate2 / max-rate
+  ]
+  ask f3s [
+   set rank cur-growth-rate3 / max-rate
+  ]
+  ask f4s [
+   set rank cur-growth-rate4 / max-rate
+  ]
+  ask f5s [
+   set rank cur-growth-rate5 / max-rate
+  ]
+  ask f6s [
+   set rank cur-growth-rate6 / max-rate
+  ]
+  ask f7s [
+   set rank cur-growth-rate7 / max-rate
+  ]
+
+        ask turtles [; with [any? other turtles-here] [;[any? f1s-here] [
+            let fight1 self
+            let fight1-rank rank
+            ask turtles-on (patch-set patch-here neighbors)[ ;(turtle-set self turtles-on neighbors)
+
+                if color != [ color ] of fight1 ;breed != [ breed ] of fight1
+                [
+                 let fight2 self
+                 let fight2-rank rank
+                 let rank-diff fight1-rank - fight2-rank
+        ;since runs 2x per pair, only smth happens when fight1 wins
+        ;if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / 10 [ ; 1 / (-17.5 * rank-diff + 17.5) [ ; 1 / (-21.88 * (rank-diff - 0.2) + 17.5)
+          ;die
+
+          if [ color ] of fight1 = f1color
+                   [
+                    if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate1) [
+                      die
+                    ask patch-here
+                    [sprout-f1s 1 [set color f1color set rank rank1]]
+                    ]
+                   ]
+
+                   if [ color ] of fight1 = f2color
+                   [
+                    if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate2) [
+                      die
+                    ask patch-here
+                    [sprout-f2s 1 [set color f2color set rank rank2]]
+            ]
+                   ]
+
+                   if [ color ] of fight1 = f3color
+                   [
+                    if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate3) [
+                      die
+                    ask patch-here
+                    [sprout-f3s 1 [set color f3color set rank rank3]]
+              ]
+                   ]
+
+                   if [ color ] of fight1 = f4color
+                   [
+          if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate4) [
+                      die
+                    ask patch-here
+                    [sprout-f4s 1 [set color f4color set rank rank4]]
+                   ]
+        ]
+
+                   if [ color ] of fight1 = f5color
+                   [
+          if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate5) [
+                      die
+                    ask patch-here
+                    [sprout-f5s 1 [set color f5color set rank rank5]]
+                   ]
+        ]
+
+                   if [ color ] of fight1 = f6color
+                   [
+          if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate6) [
+                      die
+                    ask patch-here
+                    [sprout-f6s 1 [set color f6color set rank rank6]]
+                   ]
+        ]
+
+                   if [ color ] of fight1 = f7color
+                   [
+          if  (random-float 1) <= 1 / (1 + 10 ^ (-1 * rank-diff / 2)) / (10 / cur-growth-rate7) [
+                      die
+                    ask patch-here
+                    [sprout-f7s 1 [set color f7color set rank rank7]]
+                   ]
+        ]
+
+                 ]
+                 ;[sprout-f1s 1 [set color red set rank rank1]]
+                 ;if is-f1? [set p-colo]
+        ]
+  ]
+
+end
+
 
     to add-litter ;Add extra litter year round add extra litter during fall
 
@@ -1296,7 +1407,7 @@ ground-litter-percent
 ground-litter-percent
 0
 100
-90.0
+100.0
 1
 1
 NIL
@@ -1391,7 +1502,7 @@ CHOOSER
 climate
 climate
 "arid" "semi-arid" "temperate" "boreal" "tropical-rainforest"
-2
+0
 
 MONITOR
 25
