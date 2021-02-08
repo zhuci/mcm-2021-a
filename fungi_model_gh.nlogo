@@ -41,7 +41,7 @@
         ; patches are ground litter or not
         ifelse random 100 < ground-litter-percent
         [
-         set matter-decomp random-float 0.6 + 0.3
+         set matter-decomp random-float 0.3 + 0.5
          set decomp? true
          set pcolor scale-color brown matter-decomp brown-hi brown-lo]
         [set decomp? false set matter-decomp brown-thresh set pcolor green]
@@ -527,13 +527,13 @@ to grow-f7s
     end
 
     to death-fungi ;die if growth rate < 25% of max
-        ask f1s [if cur-growth-rate1 < 0.005 * max-rate1 [die]]
-        ask f2s [if cur-growth-rate2 < 0.005 * max-rate2 [die]]
-        ask f3s [if cur-growth-rate3 < 0.005 * max-rate3 [die]]
-        ask f4s [if cur-growth-rate4 < 0.005 * max-rate4 [die]]
-        ask f5s [if cur-growth-rate5 < 0.005 * max-rate5 [die]]
-        ask f6s [if cur-growth-rate6 < 0.005 * max-rate6 [die]]
-        ask f7s [if cur-growth-rate7 < 0.005 * max-rate7 [die]]
+        ask f1s [if cur-growth-rate1 < 0.001 * max-rate1 [die]]
+        ask f2s [if cur-growth-rate2 < 0.001 * max-rate2 [die]]
+        ask f3s [if cur-growth-rate3 < 0.001 * max-rate3 [die]]
+        ask f4s [if cur-growth-rate4 < 0.001 * max-rate4 [die]]
+        ask f5s [if cur-growth-rate5 < 0.001 * max-rate5 [die]]
+        ask f6s [if cur-growth-rate6 < 0.001 * max-rate6 [die]]
+        ask f7s [if cur-growth-rate7 < 0.001 * max-rate7 [die]]
     end
 
 
@@ -1061,10 +1061,10 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
   let week ticks mod 48
 
   ;add litter
-  set random-litter-cover 0.2
-  set random-litter-matter 0.2
-  set fall-litter-cover 0.5
-  set fall-litter-matter 0.3
+  set random-litter-cover 0.8
+  set random-litter-matter 0.01
+  set fall-litter-cover 0
+  set fall-litter-matter 0
 
   if week >= 0 and week < 4 [ ;jan
     let min-temp 24
@@ -1236,7 +1236,7 @@ ground-litter-percent
 ground-litter-percent
 0
 100
-90.0
+75.0
 1
 1
 NIL
@@ -1331,7 +1331,7 @@ CHOOSER
 climate
 climate
 "arid" "semi-arid" "temperate" "boreal" "tropical-rainforest"
-2
+4
 
 MONITOR
 25
