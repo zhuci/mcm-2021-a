@@ -24,6 +24,8 @@
     f1color f2color f3color f4color f5color f6color f7color brown-hi brown-lo brown-thresh
     random-litter-cover random-litter-matter fall-litter-cover fall-litter-matter
 
+    total-decomp
+
     decomp-rate1  cur-growth1 cur-growth-rate1 new-growth1 amount-decomp1 temp-at-maxr1 moist-at-maxr1 rank1 max-rate1
     decomp-rate2  cur-growth2 cur-growth-rate2 new-growth2 amount-decomp2 temp-at-maxr2 moist-at-maxr2 rank2 max-rate2
     decomp-rate3  cur-growth3 cur-growth-rate3 new-growth3 amount-decomp3 temp-at-maxr3 moist-at-maxr3 rank3 max-rate3
@@ -55,6 +57,18 @@
 
     reset-ticks
 
+    (ifelse
+    climate = "arid"
+    [arid-climate]
+    climate = "semi-arid"
+    [semi-arid-climate]
+    climate = "temperate"
+    [temperate-climate]
+    climate = "boreal"
+    [boreal-climate]
+    climate = "tropical-rainforest"
+    [tropical-rainforest-climate])
+
 
 
     end
@@ -72,6 +86,17 @@
     ;[boreal-climate]
     ;climate = "tropical-rainforest"
     ;[tropical-rainforest-climate])
+  (ifelse
+    climate = "arid"
+    [arid-climate]
+    climate = "semi-arid"
+    [semi-arid-climate]
+    climate = "temperate"
+    [temperate-climate]
+    climate = "boreal"
+    [boreal-climate]
+    climate = "tropical-rainforest"
+    [tropical-rainforest-climate])
 
   if ticks >= 1000 [stop]
     calculate-growth-rate
@@ -90,15 +115,15 @@
     end
 
     to initialize-vars
-  ;lab conditions
-    set cur-temp 22
-    set cur-moist -.5
-  set random-litter-cover 0.05
-  set random-litter-matter 0.05
-  set fall-litter-cover 0.1
-  set fall-litter-matter 0.1
-
-  set death-threshold 0.005
+    ;lab conditions
+    ;set cur-temp 22
+    ;set cur-moist -.5
+     ;set random-litter-cover 0.05
+     ;set random-litter-matter 0.05
+     ;set fall-litter-cover 0.1
+     ;set fall-litter-matter 0.1
+     set total-decomp 0
+     set death-threshold 0.001
 
     set cur-growth1 0
     set cur-growth2 0
@@ -699,6 +724,7 @@ end
         ask turtles-here [die]]
     ]
 
+    set total-decomp amount-decomp1 + amount-decomp2 + amount-decomp3 + amount-decomp4 + amount-decomp5 + amount-decomp6
     end
 
 ;update the plots ONLY USE FOR SPECIAL COUNTS
@@ -722,7 +748,7 @@ to arid-climate ;arid sabha, ly
   ;set cur-temp 25
   set cur-moist -3
   let week ticks mod 48
-  let std-moist 2.4 / 30
+  let std-moist 8.4 / 30
 
   ;add litter
   set random-litter-cover 0.05
@@ -734,16 +760,16 @@ to arid-climate ;arid sabha, ly
     let min-temp 9
     let max-temp 18
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
-    set cur-moist min list (random-normal -2.38 std-moist) 0
+    set cur-moist min list (random-normal -6.58 std-moist) 0
   ]
 
   if week >= 4 and week < 8 [ ;feb
     let min-temp 11
     let max-temp 21
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.7 std-moist) 0
   ]
@@ -752,70 +778,70 @@ to arid-climate ;arid sabha, ly
     let min-temp 15
     let max-temp 26
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
-    set cur-moist min list (random-normal -3.1 std-moist) 0
+    set cur-moist min list (random-normal -9.1 std-moist) 0
   ]
 
   if week >= 12 and week < 16 [ ;april
     let min-temp 21
     let max-temp 32
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
-    set cur-moist min list (random-normal -2.38 std-moist) 0
+    set cur-moist min list (random-normal -6.58 std-moist) 0
   ]
 
   if week >= 16 and week < 20 [ ;may
     let min-temp 25
     let max-temp 35
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
-    set cur-moist min list (random-normal -0.94 std-moist) 0
+    set cur-moist min list (random-normal -1.54 std-moist) 0
   ]
 
   if week >= 20 and week < 24 [ ;june
     let min-temp 28
     let max-temp 38
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
-    set cur-moist min list (random-normal -.7 std-moist) 0
+    set cur-moist min list (random-normal -0.7 std-moist) 0
   ]
 
   if week >= 24 and week < 28 [ ;july
     let min-temp 28
     let max-temp 38
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
-    set cur-moist min list (random-normal -.7 std-moist) 0
+    set cur-moist min list (random-normal -0.7 std-moist) 0
   ]
 
   if week >= 28 and week < 32 [ ;august
     let min-temp 28
     let max-temp 38
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
-    set cur-moist min list (random-normal -.7 std-moist) 0
+    set cur-moist min list (random-normal -0.7 std-moist) 0
   ]
 
   if week >= 32 and week < 36 [ ;sept
     let min-temp 26
     let max-temp 36
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
-    set cur-moist min list (random-normal -.7 std-moist) 0
+    set cur-moist min list (random-normal -0.7 std-moist) 0
   ]
 
   if week >= 36 and week < 40 [ ;oct
     let min-temp 22
     let max-temp 31
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.7 std-moist) 0
   ]
@@ -824,18 +850,18 @@ to arid-climate ;arid sabha, ly
     let min-temp 16
     let max-temp 24
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
-    set cur-moist min list (random-normal -.94 std-moist) 0
+    set cur-moist min list (random-normal -1.54 std-moist) 0
   ]
 
   if week >= 44 and week < 48 [ ;nov
     let min-temp 10
     let max-temp 19
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
-    set cur-moist min list (random-normal -.94 std-moist) 0
+    set cur-moist min list (random-normal -2.54 std-moist) 0
   ]
 
 end
@@ -857,7 +883,7 @@ to semi-arid-climate ;Reno, Nevada
     let min-temp -4
     let max-temp 4
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -5.33 std-moist) 0
   ]
@@ -866,7 +892,7 @@ to semi-arid-climate ;Reno, Nevada
     let min-temp -3
     let max-temp 5
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -5.33 std-moist) 0
   ]
@@ -875,7 +901,7 @@ to semi-arid-climate ;Reno, Nevada
     let min-temp -1
     let max-temp 8
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -4.08 std-moist) 0
   ]
@@ -884,7 +910,7 @@ to semi-arid-climate ;Reno, Nevada
     let min-temp 2
     let max-temp 13
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -2.82 std-moist) 0
   ]
@@ -893,7 +919,7 @@ to semi-arid-climate ;Reno, Nevada
     let min-temp 5
     let max-temp 18
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -2.82 std-moist) 0
   ]
@@ -902,7 +928,7 @@ to semi-arid-climate ;Reno, Nevada
     let min-temp 10
     let max-temp 24
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -3.00 std-moist) 0
   ]
@@ -911,7 +937,7 @@ to semi-arid-climate ;Reno, Nevada
     let min-temp 14
     let max-temp 29
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -1.5 std-moist) 0
   ]
@@ -920,7 +946,7 @@ to semi-arid-climate ;Reno, Nevada
     let min-temp 13
     let max-temp 28
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -1.71 std-moist) 0
   ]
@@ -929,7 +955,7 @@ to semi-arid-climate ;Reno, Nevada
     let min-temp 10
     let max-temp 24
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -2.27 std-moist) 0
   ]
@@ -938,7 +964,7 @@ to semi-arid-climate ;Reno, Nevada
     let min-temp 4
     let max-temp 16
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -3.00 std-moist) 0
   ]
@@ -947,7 +973,7 @@ to semi-arid-climate ;Reno, Nevada
     let min-temp -1
     let max-temp 9
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -4.44 std-moist) 0
   ]
@@ -956,7 +982,7 @@ to semi-arid-climate ;Reno, Nevada
     let min-temp -5
     let max-temp 3
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -5.33 std-moist) 0
   ]
@@ -975,13 +1001,13 @@ to temperate-climate ;houston
   set random-litter-cover 0.05
   set random-litter-matter 0.05
   set fall-litter-cover 0.3
-  set fall-litter-matter 0.15
+  set fall-litter-matter 0.1
 
   if week >= 0 and week < 4 [ ;jan
     let min-temp (43.2 - 32) * 5 / 9
     let avg-temp (53.1 - 32) * 5 / 9
     let max-temp (62.9 - 32) * 5 / 9
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.055 std-moist) 0
   ]
@@ -990,7 +1016,7 @@ to temperate-climate ;houston
     let min-temp (46.5 - 32) * 5 / 9
     let avg-temp (56.4 - 32) * 5 / 9
     let max-temp (66.3 - 32) * 5 / 9
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.045 std-moist) 0
   ]
@@ -999,7 +1025,7 @@ to temperate-climate ;houston
     let min-temp (52.5 - 32) * 5 / 9
     let avg-temp (62.7 - 32) * 5 / 9
     let max-temp (73.0 - 32) * 5 / 9
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.057 std-moist) 0
   ]
@@ -1008,7 +1034,7 @@ to temperate-climate ;houston
     let min-temp (59.4 - 32) * 5 / 9
     let avg-temp (69.5 - 32) * 5 / 9
     let max-temp (79.6 - 32) * 5 / 9
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.051 std-moist) 0
   ]
@@ -1017,7 +1043,7 @@ to temperate-climate ;houston
     let min-temp (67.6 - 32) * 5 / 9
     let avg-temp (76.9 - 32) * 5 / 9
     let max-temp (86.3 - 32) * 5 / 9
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.14 std-moist) 0
   ]
@@ -1026,7 +1052,7 @@ to temperate-climate ;houston
     let min-temp (73.3 - 32) * 5 / 9
     let avg-temp (82.4 - 32) * 5 / 9
     let max-temp (91.4 - 32) * 5 / 9
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.19 std-moist) 0
   ]
@@ -1035,7 +1061,7 @@ to temperate-climate ;houston
     let min-temp (75.1 - 32) * 5 / 9
     let avg-temp (84.4 - 32) * 5 / 9
     let max-temp (93.7 - 32) * 5 / 9
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.076 std-moist) 0
   ]
@@ -1044,7 +1070,7 @@ to temperate-climate ;houston
     let min-temp (74.8 - 32) * 5 / 9
     let avg-temp (84.6 - 32) * 5 / 9
     let max-temp (95.4 - 32) * 5 / 9
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.076 std-moist) 0
   ]
@@ -1053,7 +1079,7 @@ to temperate-climate ;houston
     let min-temp (69.8 - 32) * 5 / 9
     let avg-temp (79.8 - 32) * 5 / 9
     let max-temp (89.7 - 32) * 5 / 9
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.094 std-moist) 0
   ]
@@ -1062,7 +1088,7 @@ to temperate-climate ;houston
     let min-temp (60.9 - 32) * 5 / 9
     let avg-temp (71.5 - 32) * 5 / 9
     let max-temp (82.0 - 32) * 5 / 9
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.178 std-moist) 0
   ]
@@ -1071,7 +1097,7 @@ to temperate-climate ;houston
     let min-temp (52.1 - 32) * 5 / 9
     let avg-temp (62.3 - 32) * 5 / 9
     let max-temp (72.5 - 32) * 5 / 9
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.105 std-moist) 0
   ]
@@ -1080,7 +1106,7 @@ to temperate-climate ;houston
     let min-temp (44.6 - 32) * 5 / 9
     let avg-temp (54.4 - 32) * 5 / 9
     let max-temp (64.3 - 32) * 5 / 9
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.074 std-moist) 0
   ]
@@ -1095,15 +1121,15 @@ to boreal-climate ;anchorage, alasksa
 
   ;add litter
   set random-litter-cover 0.05
-  set random-litter-matter 0.1
+  set random-litter-matter 0.05
   set fall-litter-cover 0.2
-  set fall-litter-matter 0.1
+  set fall-litter-matter 0.05
 
   if week >= 0 and week < 4 [ ;jan
     let min-temp -11
     let max-temp -7
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.14 std-moist) 0
   ]
@@ -1112,7 +1138,7 @@ to boreal-climate ;anchorage, alasksa
     let min-temp -10
     let max-temp -4
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.14 std-moist) 0
   ]
@@ -1121,7 +1147,7 @@ to boreal-climate ;anchorage, alasksa
     let min-temp -8
     let max-temp -2
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.117 std-moist) 0
   ]
@@ -1130,7 +1156,7 @@ to boreal-climate ;anchorage, alasksa
     let min-temp -1
     let max-temp 4
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.1 std-moist) 0
   ]
@@ -1139,7 +1165,7 @@ to boreal-climate ;anchorage, alasksa
     let min-temp 5
     let max-temp 11
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.14 std-moist) 0
   ]
@@ -1148,7 +1174,7 @@ to boreal-climate ;anchorage, alasksa
     let min-temp 9
     let max-temp 15
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.17 std-moist) 0
   ]
@@ -1157,7 +1183,7 @@ to boreal-climate ;anchorage, alasksa
     let min-temp 11
     let max-temp 16
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.294 std-moist) 0
   ]
@@ -1166,7 +1192,7 @@ to boreal-climate ;anchorage, alasksa
     let min-temp 10
     let max-temp 15
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.5 std-moist) 0
   ]
@@ -1175,7 +1201,7 @@ to boreal-climate ;anchorage, alasksa
     let min-temp 7
     let max-temp 11
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.47 std-moist) 0
   ]
@@ -1184,7 +1210,7 @@ to boreal-climate ;anchorage, alasksa
     let min-temp 2
     let max-temp 5
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.33 std-moist) 0
   ]
@@ -1193,7 +1219,7 @@ to boreal-climate ;anchorage, alasksa
     let min-temp -6
     let max-temp -3
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.20 std-moist) 0
   ]
@@ -1202,7 +1228,7 @@ to boreal-climate ;anchorage, alasksa
     let min-temp -9
     let max-temp -5
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.19 std-moist) 0
   ]
@@ -1216,8 +1242,8 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
   let std-moist .5 / 30
 
   ;add litter
-  set random-litter-cover 0.8
-  set random-litter-matter 0.01
+  set random-litter-cover 0.3
+  set random-litter-matter 0.05
   set fall-litter-cover 0
   set fall-litter-matter 0
 
@@ -1225,7 +1251,7 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
     let min-temp 24
     let max-temp 30
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.18 std-moist) 0
   ]
@@ -1234,7 +1260,7 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
     let min-temp 23
     let max-temp 31
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.080 std-moist) 0
   ]
@@ -1243,7 +1269,7 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
     let min-temp 24
     let max-temp 31
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.17 std-moist) 0
   ]
@@ -1252,7 +1278,7 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
     let min-temp 24
     let max-temp 32
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.25 std-moist) 0
   ]
@@ -1261,7 +1287,7 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
     let min-temp 24
     let max-temp 32
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.17 std-moist) 0
   ]
@@ -1270,7 +1296,7 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
     let min-temp 24
     let max-temp 32
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.073 std-moist) 0
   ]
@@ -1279,7 +1305,7 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
     let min-temp 24
     let max-temp 32
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.048 std-moist) 0
   ]
@@ -1288,7 +1314,7 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
     let min-temp 24
     let max-temp 32
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal 0 std-moist) 0
   ]
@@ -1297,7 +1323,7 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
     let min-temp 24
     let max-temp 32
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.26 std-moist) 0
   ]
@@ -1306,7 +1332,7 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
     let min-temp 24
     let max-temp 31
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.34 std-moist) 0
   ]
@@ -1315,7 +1341,7 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
     let min-temp 24
     let max-temp 31
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.5 std-moist) 0
   ]
@@ -1324,7 +1350,7 @@ to tropical-rainforest-climate ;Pontianak, Indonesia
     let min-temp 24
     let max-temp 30
     let avg-temp (max-temp + min-temp) / 2
-    let std (max-temp - min-temp) / 3
+    let std (max-temp - min-temp) / 6
     set cur-temp random-normal avg-temp std
     set cur-moist min list (random-normal -.28 std-moist) 0
   ]
@@ -1401,7 +1427,7 @@ ground-litter-percent
 ground-litter-percent
 0
 100
-75.0
+15.0
 1
 1
 NIL
@@ -1415,8 +1441,8 @@ SLIDER
 initial-fungi-per-cluster
 initial-fungi-per-cluster
 0
-100
-50.0
+200
+25.0
 1
 1
 NIL
@@ -1496,7 +1522,7 @@ CHOOSER
 climate
 climate
 "arid" "semi-arid" "temperate" "boreal" "tropical-rainforest"
-1
+0
 
 MONITOR
 25
@@ -1555,6 +1581,24 @@ false
 "" ""
 PENS
 "default" 1.0 0 -14835848 true "" "plot cur-temp"
+
+PLOT
+1261
+580
+1461
+730
+Total Decomp over Time
+Time
+Total Decomp
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"total-decomp" 1.0 0 -16777216 true "" "plot total-decomp"
 
 @#$#@#$#@
 ## WHAT IS IT?
