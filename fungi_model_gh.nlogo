@@ -55,18 +55,6 @@
 
     reset-ticks
 
-    (ifelse
-    climate = "arid"
-    [arid-climate]
-    climate = "semi-arid"
-    [semi-arid-climate]
-    climate = "temperate"
-    [temperate-climate]
-    climate = "boreal"
-    [boreal-climate]
-    climate = "tropical-rainforest"
-    [tropical-rainforest-climate])
-
 
 
     end
@@ -84,24 +72,13 @@
     ;[boreal-climate]
     ;climate = "tropical-rainforest"
     ;[tropical-rainforest-climate])
-  (ifelse
-    climate = "arid"
-    [arid-climate]
-    climate = "semi-arid"
-    [semi-arid-climate]
-    climate = "temperate"
-    [temperate-climate]
-    climate = "boreal"
-    [boreal-climate]
-    climate = "tropical-rainforest"
-    [tropical-rainforest-climate])
 
   if ticks >= 1000 [stop]
     calculate-growth-rate
     grow-fungi
     fight-fungi
   ;fight-fungi-byrate
-    death-fungi
+    ;death-fungi
     decompose
     add-litter
 
@@ -1424,7 +1401,7 @@ ground-litter-percent
 ground-litter-percent
 0
 100
-61.0
+75.0
 1
 1
 NIL
@@ -1438,8 +1415,8 @@ SLIDER
 initial-fungi-per-cluster
 initial-fungi-per-cluster
 0
-100
-80.0
+200
+125.0
 1
 1
 NIL
@@ -1519,7 +1496,7 @@ CHOOSER
 climate
 climate
 "arid" "semi-arid" "temperate" "boreal" "tropical-rainforest"
-2
+1
 
 MONITOR
 25
