@@ -1522,7 +1522,7 @@ CHOOSER
 climate
 climate
 "arid" "semi-arid" "temperate" "boreal" "tropical-rainforest"
-0
+2
 
 MONITOR
 25
